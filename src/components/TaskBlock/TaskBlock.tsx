@@ -3,7 +3,7 @@
 import axios from "axios";
 import Task from "@/components/Task/Task";
 import { ITask } from "@/types/task";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ApiResponse {
     status: string;
@@ -22,12 +22,16 @@ const TaskBlock = () => {
                 console.error(error.message);
             });
     };
-    getTasks();
+    useEffect(()=> {
+        getTasks();
+    }, [])
+
+    
     return (
         <div className="flex flex-col gap-8">
             {taskData &&
                 taskData.map((item: ITask) => (
-                    <Task key={item.id} id={item.id} text={item.name} />
+                    <Task key={item.id} id={item.id} name={item.name} />
                 ))}
         </div>
     );

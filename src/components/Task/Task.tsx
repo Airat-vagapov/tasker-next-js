@@ -1,6 +1,6 @@
 import { ITask } from "@/types/task";
 
-const Task: React.FC<ITask> = ({ id, text }) => {
+const Task: React.FC<ITask> = ({ id, name }) => {
     return (
         <div
             className={
@@ -8,7 +8,7 @@ const Task: React.FC<ITask> = ({ id, text }) => {
             }
         >
             <p>{id}</p>
-            <p>{text}</p>
+            <p>{name}</p>
         </div>
     );
 };
