@@ -9,6 +9,7 @@
     --mainwhite: #fcfdff;
     --blue: #0b68e7;
     --blueHover: #0b51b3;
+    --errorRed: #f94a24;
 }
 
 @theme inline {
@@ -22,6 +23,7 @@
     --color-mainwhite: var(--white);
     --color-blue: var(--blue);
     --color-blueHover: var(--blueHover);
+    --color-errorRed: var(--errorRed);
 }
 
 @media (prefers-color-scheme: dark) {

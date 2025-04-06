@@ -31,7 +31,7 @@ const AddNewTaskForm = () => {
 
             try {
                 await addNewTask(values.text);
-                addNewTaskForm.values.text = "";
+                addNewTaskForm.resetForm();
             } catch (err) {
                 console.error(err);
             }
@@ -39,6 +39,7 @@ const AddNewTaskForm = () => {
     });
 
     const { errors, touched } = addNewTaskForm;
+    console.log(touched);
     return (
         <div className="">
             <form
@@ -46,7 +47,6 @@ const AddNewTaskForm = () => {
                 onSubmit={addNewTaskForm.handleSubmit}
             >
                 <p className="text-center">Add new task</p>
-                {errors.text && touched.text && <div>{errors.text}</div>}
                 <Input
                     label="Task text"
                     id="text"

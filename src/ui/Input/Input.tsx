@@ -24,9 +24,11 @@ const Input: React.FC<InputProps> = ({
     return (
         <div className="flex flex-col gap-4">
             <label htmlFor="">{label}</label>
-            <div className="">
+            <div className="relative">
                 <input
-                    className="bg-mainblack w-full p-2 color-mainwhite rounded-md h-14"
+                    className={`bg-mainblack w-full py-4.5 px-3 color-mainwhite rounded-md h-14 border-1 transition-all duration-300
+                        ${errorText ? "border-errorRed" : "border-transparent"}
+                    `}
                     id={id}
                     name={name}
                     type={inptType}
@@ -34,7 +36,13 @@ const Input: React.FC<InputProps> = ({
                     onBlur={onBlur}
                     value={value}
                 />
-                {errorText && <span>{errorText}</span>}
+                <span
+                    className={`absolute top-[4px] left-[12px] text-[10px] text-errorRed transition-all duration-300
+                    ${errorText ? "opacity-100" : "opacity-0"}
+                    `}
+                >
+                    {errorText}
+                </span>
             </div>
         </div>
     );
