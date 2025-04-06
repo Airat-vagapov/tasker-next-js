@@ -2,6 +2,7 @@
 
 import Button from "@/ui/Button/Button";
 import Modal from "@/components/Modal/Modal";
+import AddNewTaskForm from './AddNewTaskForm/AddNewTaskForm'
 import { useState } from "react";
 
 const AddNewTask = () => {
@@ -13,7 +14,7 @@ const AddNewTask = () => {
                 text={"Add new task"}
             />
             <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
-                <p className="text-black">Test</p>
+                <AddNewTaskForm />
             </Modal>
         </>
     );

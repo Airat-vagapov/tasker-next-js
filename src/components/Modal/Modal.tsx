@@ -10,7 +10,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
     if (!isOpen) return null;
     return createPortal(
         <div>
-            <div className="bg-white p-6 fixed z-50 top-[50%] left-[50%]">
+            <div className="bg-lightblack p-6 fixed z-50 top-[50%] left-[50%]">
                 {children}
             </div>
             <div
