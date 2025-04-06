@@ -1,11 +1,17 @@
+"use client";
+
 import { useFormik } from "formik";
 
 import Input from "@/ui/Input/Input";
 import Button from "@/ui/Button/Button";
 import axios from "axios";
 import * as yup from "yup";
+import { useState } from "react";
+import SuccessBlock from "@/components/SuccessBlock/SuccessBlock";
 
 const AddNewTaskForm = () => {
+    const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
+
     const addNewTask = async (text: string) => {
         await axios
             .post("http://localhost:8080/task", {
@@ -31,6 +37,7 @@ const AddNewTaskForm = () => {
 
             try {
                 await addNewTask(values.text);
+                setTaskIsAdded(true);
                 addNewTaskForm.resetForm();
             } catch (err) {
                 console.error(err);
@@ -41,7 +48,7 @@ const AddNewTaskForm = () => {
     const { errors, touched } = addNewTaskForm;
     console.log(touched);
     return (
-        <div className="">
+        <div className="relative">
             <form
                 className="flex flex-col gap-5"
                 onSubmit={addNewTaskForm.handleSubmit}
@@ -60,6 +67,7 @@ const AddNewTaskForm = () => {
 
                 <Button btnType="submit" text={"Add new task"} />
             </form>
+            {<SuccessBlock />}
         </div>
     );
 };
