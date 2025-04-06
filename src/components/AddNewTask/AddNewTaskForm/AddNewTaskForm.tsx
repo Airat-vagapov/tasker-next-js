@@ -12,6 +12,9 @@ const AddNewTaskForm = () => {
             })
             .then((res) => {
                 console.log(res);
+            })
+            .catch((error) => {
+                console.log(error);
             });
     };
 
@@ -19,10 +22,15 @@ const AddNewTaskForm = () => {
         initialValues: {
             text: "",
         },
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             console.log(values);
 
-            addNewTask(values.text);
+            try {
+                await addNewTask(values.text);
+                addNewTaskForm.values.text = "";
+            } catch (err) {
+                console.error(err);
+            }
         },
     });
 
@@ -32,6 +40,7 @@ const AddNewTaskForm = () => {
                 className="flex flex-col gap-5"
                 onSubmit={addNewTaskForm.handleSubmit}
             >
+                <p className="text-center">Add new task</p>
                 <Input
                     label="Task text"
                     id="text"

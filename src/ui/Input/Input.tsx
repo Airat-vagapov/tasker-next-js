@@ -23,7 +23,7 @@ const Input: React.FC<InputProps> = ({
         <div className="flex flex-col gap-4">
             <label htmlFor="">{label}</label>
             <input
-                className="bg-mainblack p-2 color-mainwhite"
+                className="bg-mainblack p-2 color-mainwhite rounded-md"
                 id={id}
                 name={name}
                 type={inptType}
