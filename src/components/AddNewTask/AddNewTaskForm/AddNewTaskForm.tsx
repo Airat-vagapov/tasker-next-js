@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import Input from "@/ui/Input/Input";
 import Button from "@/ui/Button/Button";
 import axios from "axios";
+import * as yup from "yup";
 
 const AddNewTaskForm = () => {
     const addNewTask = async (text: string) => {
@@ -22,6 +23,9 @@ const AddNewTaskForm = () => {
         initialValues: {
             text: "",
         },
+        validationSchema: yup.object({
+            text: yup.string().required("Required"),
+        }),
         onSubmit: async (values) => {
             console.log(values);
 
@@ -34,6 +38,7 @@ const AddNewTaskForm = () => {
         },
     });
 
+    const { errors, touched } = addNewTaskForm;
     return (
         <div className="">
             <form
@@ -41,6 +46,7 @@ const AddNewTaskForm = () => {
                 onSubmit={addNewTaskForm.handleSubmit}
             >
                 <p className="text-center">Add new task</p>
+                {errors.text && touched.text && <div>{errors.text}</div>}
                 <Input
                     label="Task text"
                     id="text"
@@ -49,16 +55,10 @@ const AddNewTaskForm = () => {
                     onChange={addNewTaskForm.handleChange}
                     onBlur={addNewTaskForm.handleBlur}
                     value={addNewTaskForm.values.text}
+                    errorText={errors.text}
                 />
-                {/* <input
-                    id="taskText"
-                    name="taskText"
-                    type="text"
-                    onChange={addNewTaskForm.handleChange}
-                    onBlur={addNewTaskForm.handleBlur}
-                    value={addNewTaskForm.values.text}
-                /> */}
-                <Button text={"Add new task"} />
+
+                <Button btnType="submit" text={"Add new task"} />
             </form>
         </div>
     );

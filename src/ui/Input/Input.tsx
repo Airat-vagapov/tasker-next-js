@@ -8,6 +8,7 @@ type InputProps = {
     onChange: (e: ChangeEvent<any>) => void;
     onBlur: (e: FocusEvent<any, Element>) => void;
     value: string | number;
+    errorText?: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -18,19 +19,23 @@ const Input: React.FC<InputProps> = ({
     onChange,
     onBlur,
     value,
+    errorText,
 }) => {
     return (
         <div className="flex flex-col gap-4">
             <label htmlFor="">{label}</label>
-            <input
-                className="bg-mainblack p-2 color-mainwhite rounded-md"
-                id={id}
-                name={name}
-                type={inptType}
-                onChange={onChange}
-                onBlur={onBlur}
-                value={value}
-            />
+            <div className="">
+                <input
+                    className="bg-mainblack w-full p-2 color-mainwhite rounded-md h-14"
+                    id={id}
+                    name={name}
+                    type={inptType}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                />
+                {errorText && <span>{errorText}</span>}
+            </div>
         </div>
     );
 };
