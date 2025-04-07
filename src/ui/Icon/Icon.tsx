@@ -1,7 +1,7 @@
 type IconProps = {
     name: string;
     size?: number;
-    color?: string;
+    color?: string | "white";
 };
 
 const Icon = ({ name, size, color }: IconProps) => {
@@ -9,10 +9,14 @@ const Icon = ({ name, size, color }: IconProps) => {
         <>
             <span
                 className={`
+                    text-${color}
+                    text-[32px]
                     material-symbols-outlined
-                    ${size ? `text-[${size}px]` : "text-[24px]"}
-                    ${color ? `text-${color}` : "text-white"}
                 `}
+                style={{
+                    fontSize: `${size}px`,
+                    color: `var(--${color})`,
+                }}
             >
                 {name}
             </span>

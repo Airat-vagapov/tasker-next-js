@@ -46,28 +46,38 @@ const AddNewTaskForm = () => {
     });
 
     const { errors, touched } = addNewTaskForm;
-    console.log(touched);
+
     return (
         <div className="relative">
-            <form
-                className="flex flex-col gap-5"
-                onSubmit={addNewTaskForm.handleSubmit}
-            >
-                <p className="text-center">Add new task</p>
-                <Input
-                    label="Task text"
-                    id="text"
-                    name="text"
-                    inptType="text"
-                    onChange={addNewTaskForm.handleChange}
-                    onBlur={addNewTaskForm.handleBlur}
-                    value={addNewTaskForm.values.text}
-                    errorText={errors.text}
-                />
+            {!taskIsAdded && (
+                <form
+                    className="flex flex-col gap-5"
+                    onSubmit={addNewTaskForm.handleSubmit}
+                >
+                    <p className="text-center">Add new task</p>
+                    <Input
+                        label="Task text"
+                        id="text"
+                        name="text"
+                        inptType="text"
+                        onChange={addNewTaskForm.handleChange}
+                        onBlur={addNewTaskForm.handleBlur}
+                        value={addNewTaskForm.values.text}
+                        errorText={errors.text}
+                    />
 
-                <Button btnType="submit" text={"Add new task"} />
-            </form>
-            {<SuccessBlock />}
+                    <Button btnType="submit" text={"Add new task"} />
+                </form>
+            )}
+
+            {taskIsAdded && (
+                <SuccessBlock
+                    title="New task succesfully added!"
+                    text="New task you can see on main page"
+                    actionText="Add another task"
+                    action={() => setTaskIsAdded(false)}
+                />
+            )}
         </div>
     );
 };
