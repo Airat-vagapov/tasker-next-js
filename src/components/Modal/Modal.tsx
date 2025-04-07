@@ -1,3 +1,4 @@
+import Icon from "@/ui/Icon/Icon";
 import { createPortal } from "react-dom";
 
 type ModalProps = {
@@ -24,6 +25,12 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
                         isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
                     } `}
             >
+                <div
+                    onClick={onClose}
+                    className="absolute right-[24px] z-10 cursor-pointer hover:text-blueHover transition-all duration-300"
+                >
+                    <Icon name={"close"} />
+                </div>
                 {children}
             </div>
             <div
