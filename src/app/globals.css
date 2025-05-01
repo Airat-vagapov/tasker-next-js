@@ -3,6 +3,7 @@
 :root {
     --background: #fcfdff;
     --foreground: #171717;
+    --white: #fcfdff;
     --mainblack: #121315;
     --lightblack: #26272b;
     --gray: #696e70;
@@ -28,16 +29,16 @@
     --color-mainGreen: var(--mainGreen);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     :root {
         --background: #0a0a0a;
         --foreground: #ededed;
     }
-}
+} */
 
 body {
     background: var(--mainblack);
-    color: var(--foreground);
+    color: var(--white);
     font-family: var(--font-geist-sans) sans-serif;
 }
 

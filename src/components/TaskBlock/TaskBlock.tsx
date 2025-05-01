@@ -22,16 +22,27 @@ const TaskBlock = () => {
                 console.error(error.message);
             });
     };
-    useEffect(()=> {
+    useEffect(() => {
         getTasks();
     }, [])
 
-    
+
     return (
         <div className="flex flex-col gap-8">
             {taskData &&
                 taskData.map((item: ITask) => (
-                    <Task key={item.id} id={item.id} name={item.name} />
+                    <Task
+                        key={item.id}
+                        id={item.id}
+                        title={item.title}
+                        description={item.description}
+                        author={item.author}
+                        status={item.status}
+                        priority={item.priority}
+                        created_at={item.created_at}
+                        updated_at={item.updated_at}
+                        due_date={item.due_date}
+                    />
                 ))}
         </div>
     );
