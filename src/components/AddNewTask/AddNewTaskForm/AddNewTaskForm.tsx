@@ -1,22 +1,25 @@
 "use client";
 
+import axios from "axios";
 import { useFormik } from "formik";
+import * as yup from "yup";
+
+import { useState } from "react";
 
 import Input from "@/ui/Input/Input";
 import Button from "@/ui/Button/Button";
-import axios from "axios";
-import * as yup from "yup";
-import { useState } from "react";
 import SuccessBlock from "@/components/SuccessBlock/SuccessBlock";
+import Droplist from "@/ui/Droplist/Droplist";
+
+import { ITask } from "@/types/task"
+import { priorityData } from '@/data/priority'
 
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
 
-    const addNewTask = async (text: string) => {
+    const addNewTask = async (task: ITask) => {
         await axios
-            .post("http://localhost:8080/task", {
-                text: text,
-            })
+            .post("http://localhost:8080/task", task)
             .then((res) => {
                 console.log(res);
             })
@@ -32,13 +35,14 @@ const AddNewTaskForm = () => {
             priority: '',
         },
         validationSchema: yup.object({
-            text: yup.string().required("Required"),
+            title: yup.string().required("Required"),
+            description: yup.string().required("Required"),
         }),
         onSubmit: async (values) => {
             console.log(values);
 
             try {
-                await addNewTask(values.title);
+                await addNewTask(values);
                 setTaskIsAdded(true);
                 addNewTaskForm.resetForm();
             } catch (err) {
@@ -48,7 +52,6 @@ const AddNewTaskForm = () => {
     });
 
     const { errors, touched } = addNewTaskForm;
-
     return (
         <div className="relative">
             {!taskIsAdded && (
@@ -77,7 +80,7 @@ const AddNewTaskForm = () => {
                         value={addNewTaskForm.values.description}
                         errorText={errors.description}
                     />
-                    <Input
+                    {/* <Input
                         label="Description"
                         id="text"
                         name="text"
@@ -86,11 +89,17 @@ const AddNewTaskForm = () => {
                         onBlur={addNewTaskForm.handleBlur}
                         value={addNewTaskForm.values.priority}
                         errorText={errors.priority}
+                    /> */}
+
+                    <Droplist
+                        id="priority"
+                        name="priority"
+                        label="Priority"
+                        onChange={addNewTaskForm.handleChange}
+                        onBlur={addNewTaskForm.handleBlur}
+                        value={addNewTaskForm.values.priority}
+                        options={priorityData}
                     />
-                    <select>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
 
                     <Button btnType="submit" text={"Add new task"} />
                 </form>

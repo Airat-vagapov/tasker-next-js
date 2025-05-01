@@ -1,7 +1,7 @@
 import { ChangeEvent, FocusEvent } from "react";
 
 type InputProps = {
-    label: string;
+    label?: string;
     id: string;
     name: string;
     inptType: string;
@@ -26,8 +26,9 @@ const Input: React.FC<InputProps> = ({
             <label htmlFor={name}>{label}</label>
             <div className="relative">
                 <input
-                    className={`bg-mainblack w-full py-4.5 px-3 color-mainwhite rounded-md h-14 border-1 transition-all duration-300
-                        ${errorText ? "border-errorRed" : "border-transparent"}
+                    className={`bg-mainblack w-full py-4.5 px-3 color-mainwhite rounded-md h-14 transition-all duration-300 
+                    border-1  focus:border-blue 
+                    ${errorText ? "border-errorRed" : "border-mainblack"}
                     `}
                     id={id}
                     name={name}
@@ -37,7 +38,7 @@ const Input: React.FC<InputProps> = ({
                     value={value}
                 />
                 <span
-                    className={`absolute top-[4px] left-[12px] text-[10px] text-errorRed transition-all duration-300
+                    className={`absolute top-[4px] left-[12px] text-[12px] text-errorRed transition-all duration-300
                     ${errorText ? "opacity-100" : "opacity-0"}
                     `}
                 >
