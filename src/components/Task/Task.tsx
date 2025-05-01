@@ -3,6 +3,7 @@ import { ITask } from "@/types/task";
 const Task: React.FC<ITask> = ({
     id,
     title,
+    description,
     author,
     status,
     priority,

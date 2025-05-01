@@ -27,7 +27,9 @@ const AddNewTaskForm = () => {
 
     const addNewTaskForm = useFormik({
         initialValues: {
-            text: "",
+            title: '',
+            description: '',
+            priority: '',
         },
         validationSchema: yup.object({
             text: yup.string().required("Required"),
@@ -36,7 +38,7 @@ const AddNewTaskForm = () => {
             console.log(values);
 
             try {
-                await addNewTask(values.text);
+                await addNewTask(values.title);
                 setTaskIsAdded(true);
                 addNewTaskForm.resetForm();
             } catch (err) {
@@ -58,12 +60,32 @@ const AddNewTaskForm = () => {
                     <Input
                         label="Task text"
                         id="text"
+                        name="title"
+                        inptType="text"
+                        onChange={addNewTaskForm.handleChange}
+                        onBlur={addNewTaskForm.handleBlur}
+                        value={addNewTaskForm.values.title}
+                        errorText={errors.title}
+                    />
+                    <Input
+                        label="Description"
+                        id="text"
+                        name="description"
+                        inptType="text"
+                        onChange={addNewTaskForm.handleChange}
+                        onBlur={addNewTaskForm.handleBlur}
+                        value={addNewTaskForm.values.description}
+                        errorText={errors.description}
+                    />
+                    <Input
+                        label="Description"
+                        id="text"
                         name="text"
                         inptType="text"
                         onChange={addNewTaskForm.handleChange}
                         onBlur={addNewTaskForm.handleBlur}
-                        value={addNewTaskForm.values.text}
-                        errorText={errors.text}
+                        value={addNewTaskForm.values.priority}
+                        errorText={errors.priority}
                     />
 
                     <Button btnType="submit" text={"Add new task"} />

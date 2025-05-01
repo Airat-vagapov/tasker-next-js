@@ -1,4 +1,5 @@
 import Icon from "@/ui/Icon/Icon";
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
 type ModalProps = {
@@ -8,11 +9,19 @@ type ModalProps = {
 };
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
-    isOpen
-        ? (document.body.style.overflow = "hidden")
-        : (document.body.style.overflow = "");
 
-    // if (!isOpen) return null;
+    // Блок скролла при открытии модалки
+    useEffect(() => {
+        isOpen
+            ? (document.body.style.overflow = "hidden")
+            : (document.body.style.overflow = "");
+    }, [isOpen])
+
+
+    // Если модалка не открыта не рендерим 
+    if (!isOpen) return null;
+    
+    
     return createPortal(
         <div
             className={`fixed inset-0 z-50 flex items-center justify-center 
@@ -21,8 +30,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
         >
             <div
                 className={`bg-lightblack p-6 w-full max-w-md relative rounded-lg z-50 transform transition-all duration-300 
-                    ${
-                        isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
+                    ${isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
                     } `}
             >
                 <div
@@ -40,7 +48,6 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
                 onClick={onClose}
             />
         </div>,
-
         document.body
     );
 };
