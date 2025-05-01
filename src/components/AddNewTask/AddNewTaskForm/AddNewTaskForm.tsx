@@ -58,7 +58,7 @@ const AddNewTaskForm = () => {
                 >
                     <p className="text-center">Add new task</p>
                     <Input
-                        label="Task text"
+                        label="Name"
                         id="text"
                         name="title"
                         inptType="text"
@@ -87,6 +87,10 @@ const AddNewTaskForm = () => {
                         value={addNewTaskForm.values.priority}
                         errorText={errors.priority}
                     />
+                    <select>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
 
                     <Button btnType="submit" text={"Add new task"} />
                 </form>
