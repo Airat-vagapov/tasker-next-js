@@ -7,6 +7,7 @@
     --mainblack: #121315;
     --lightblack: #26272b;
     --gray: #696e70;
+    --lightGray: #252929;
     --mainwhite: #fcfdff;
     --blue: #0b68e7;
     --blueHover: #0b51b3;
@@ -22,6 +23,7 @@
     --color-mainblack: var(--mainblack);
     --color-lightblack: var(--lightblack);
     --color-gray: var(--gray);
+    --color-lightGray: var(--lightGray);
     --color-mainwhite: var(--white);
     --color-blue: var(--blue);
     --color-blueHover: var(--blueHover);

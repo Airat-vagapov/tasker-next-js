@@ -1,9 +1,11 @@
 'use client'
-import Input from '@/ui/Input/Input';
+import { FormikProps } from 'formik';
 import { ChangeEvent, FocusEvent, useEffect, useRef, useState } from "react";
+
+import Input from '@/ui/Input/Input';
 import { ISelectData } from '@/types/global';
 
-type DroplistProps = {
+type DroplistProps<T> = {
     id: string;
     name: string;
     label: string;
@@ -11,9 +13,10 @@ type DroplistProps = {
     onBlur: (e: FocusEvent<any, Element>) => void;
     value: string | number;
     options: ISelectData[];
+    form: FormikProps<T>;
 }
 
-const Droplist: React.FC<DroplistProps> = ({
+const Droplist = <T,>({
     id,
     name,
     label,
@@ -21,7 +24,8 @@ const Droplist: React.FC<DroplistProps> = ({
     onBlur,
     value,
     options,
-}) => {
+    form,
+}: DroplistProps<T>) => {
     const [listIsOpen, setListIsOpen] = useState<boolean>(false)
     const selectRef = useRef<HTMLDivElement>(null)
 
@@ -53,12 +57,23 @@ const Droplist: React.FC<DroplistProps> = ({
             </div>
 
             {listIsOpen &&
-                <div className='absolute w-[100%] '>
-                    <ul className='flex flex-col gap-2 bg-mainblack p-1'>
+                <div className='absolute w-[100%] top-[calc(100%+8px)] '>
+                    <ul className='flex flex-col bg-mainblack rounded-md'>
                         {options && options.map((item, indx) => {
                             return (
                                 <>
-                                    <li key={indx}>{item.title}</li>
+                                    <li
+                                        className='px-3 transition-all duration-300 cursor-pointer p-2.5
+                                        hover:bg-lightblack hover:text-blue 
+                                        '
+                                        key={indx}
+                                        onClick={() => {
+                                            setListIsOpen(false)
+                                            form.setFieldValue('priority', item.title)
+                                        }}
+                                    >
+                                        {item.title}
+                                    </li>
                                 </>
                             )
 

@@ -14,6 +14,12 @@ import Droplist from "@/ui/Droplist/Droplist";
 import { ITask } from "@/types/task"
 import { priorityData } from '@/data/priority'
 
+type AddNewTaskFormValues = {
+    title: string;
+    description: string;
+    priority: string;
+}
+
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
 
@@ -28,7 +34,7 @@ const AddNewTaskForm = () => {
             });
     };
 
-    const addNewTaskForm = useFormik({
+    const addNewTaskForm = useFormik<AddNewTaskFormValues>({
         initialValues: {
             title: '',
             description: '',
@@ -40,7 +46,6 @@ const AddNewTaskForm = () => {
         }),
         onSubmit: async (values) => {
             console.log(values);
-
             try {
                 await addNewTask(values);
                 setTaskIsAdded(true);
@@ -99,6 +104,7 @@ const AddNewTaskForm = () => {
                         onBlur={addNewTaskForm.handleBlur}
                         value={addNewTaskForm.values.priority}
                         options={priorityData}
+                        form={addNewTaskForm}
                     />
 
                     <Button btnType="submit" text={"Add new task"} />
