@@ -53,6 +53,7 @@ const Droplist = <T,>({
                     onChange={onChange}
                     onBlur={onBlur}
                     value={value}
+                    disable={true}
                 />
             </div>
 
