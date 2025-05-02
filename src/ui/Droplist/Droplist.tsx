@@ -69,7 +69,7 @@ const Droplist = <T,>({
                                         key={indx}
                                         onClick={() => {
                                             setListIsOpen(false)
-                                            form.setFieldValue('priority', item.title)
+                                            form.setFieldValue(name, item.title)
                                         }}
                                     >
                                         {item.title}
