@@ -24,14 +24,8 @@ const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
 
     const addNewTask = async (task: ITask) => {
-        await axios
-            .post("http://localhost:8080/task", task)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        const res = await axios.post("http://localhost:8080/task", task)
+        return res
     };
 
     const addNewTaskForm = useFormik<AddNewTaskFormValues>({
@@ -45,11 +39,12 @@ const AddNewTaskForm = () => {
             description: yup.string().required("Required"),
         }),
         onSubmit: async (values) => {
-            console.log(values);
+
             try {
-                await addNewTask(values);
+                const res = await addNewTask(values);
                 setTaskIsAdded(true);
                 addNewTaskForm.resetForm();
+
             } catch (err) {
                 console.error(err);
             }

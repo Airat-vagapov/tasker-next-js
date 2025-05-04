@@ -9,7 +9,7 @@ const Button: React.FC<ButtonProps> = ({ text, btnType, onClick }) => {
         <button
             type={btnType}
             onClick={onClick}
-            className="cursor-pointer p-[8px] text-mainwhite bg-blue hover:bg-blueHover duration-300 rounded-sm"
+            className="cursor-pointer p-[10px] text-mainwhite bg-blue hover:bg-blueHover duration-300 rounded-lg"
         >
             {text}
         </button>
