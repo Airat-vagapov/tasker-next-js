@@ -62,20 +62,18 @@ const Droplist = <T,>({
                     <ul className='flex flex-col bg-mainblack rounded-md'>
                         {options && options.map((item, indx) => {
                             return (
-                                <>
-                                    <li
-                                        className='px-3 transition-all duration-300 cursor-pointer p-2.5
+                                <li
+                                    className='px-3 transition-all duration-300 cursor-pointer p-2.5
                                         hover:bg-lightblack hover:text-blue 
                                         '
-                                        key={indx}
-                                        onClick={() => {
-                                            setListIsOpen(false)
-                                            form.setFieldValue(name, item.title)
-                                        }}
-                                    >
-                                        {item.title}
-                                    </li>
-                                </>
+                                    key={indx}
+                                    onClick={() => {
+                                        setListIsOpen(false)
+                                        form.setFieldValue(name, item.title)
+                                    }}
+                                >
+                                    {item.title}
+                                </li>
                             )
 
                         })}
