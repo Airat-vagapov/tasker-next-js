@@ -53,7 +53,8 @@ const TaskBlock = () => {
                     ))}
             </div>
 
-            <ErrorBottom errorText={error} />
+            {error && <ErrorBottom errorText={error} />}
+
         </>
     );
 };

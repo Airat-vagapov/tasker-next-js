@@ -13,6 +13,8 @@
     --blueHover: #0b51b3;
     --errorRed: #f94a24;
     --mainGreen: #2fab5c;
+    --purple: #cbcbf8;
+    --purpleFull: #4318ff;
 }
 
 @theme inline {
@@ -29,6 +31,8 @@
     --color-blueHover: var(--blueHover);
     --color-errorRed: var(--errorRed);
     --color-mainGreen: var(--mainGreen);
+    --color-purple: var(--purple);
+    --color-purpleFull: var(--purpleFull)
 }
 
 /* @media (prefers-color-scheme: dark) {
