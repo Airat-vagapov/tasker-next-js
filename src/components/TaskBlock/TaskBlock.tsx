@@ -31,9 +31,10 @@ const TaskBlock = () => {
                     console.error(error.message);
                     setError(error.message)
                 }
-
             });
     };
+
+    // Effects 
     useEffect(() => {
         getTasks();
     }, [])
@@ -44,7 +45,6 @@ const TaskBlock = () => {
             resetUpdate();
         }
     }, [isNeedUpdate])
-
 
     return (
         <>
