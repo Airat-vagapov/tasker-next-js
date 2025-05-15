@@ -15,7 +15,6 @@ const Logo: React.FC = () => {
 
         const colorClass = colors[Math.floor(Math.random() * colors.length)];
         setColorClass(colorClass)
-        console.log(colorClass)
     }
     useEffect(() => {
         const classRandomInterval = setInterval(colorClassRandomizer, 2000)

@@ -15,6 +15,8 @@ import Droplist from "@/ui/Droplist/Droplist";
 import { ITask } from "@/types/task"
 import { priorityData } from '@/data/priority'
 
+import { useTaskListStore } from "@/store/store"
+
 type AddNewTaskFormValues = {
     title: string;
     description: string;
@@ -24,7 +26,7 @@ type AddNewTaskFormValues = {
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
-
+    const updateState = useTaskListStore((state) => state.changeUpdate)
     const addNewTask = async (task: ITask) => {
         const res = await axios.post("http://localhost:8080/task", task)
         return res
@@ -41,13 +43,12 @@ const AddNewTaskForm = () => {
             description: yup.string().required("Required"),
         }),
         onSubmit: async (values) => {
-
             try {
                 const res = await addNewTask(values);
                 setTaskAddError(false);
                 setTaskIsAdded(true);
                 addNewTaskForm.resetForm();
-
+                updateState()
             } catch (err) {
                 console.error(err);
                 setTaskIsAdded(false);

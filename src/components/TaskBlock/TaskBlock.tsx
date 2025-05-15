@@ -5,6 +5,7 @@ import Task from "@/components/Task/Task";
 import { ITask } from "@/types/task";
 import { useEffect, useState } from "react";
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
+import { useTaskListStore } from "@/store/store";
 
 interface ApiResponse {
     status: string;
@@ -12,8 +13,13 @@ interface ApiResponse {
 }
 
 const TaskBlock = () => {
+    // States
     const [taskData, setTaskData] = useState<ITask[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const isNeedUpdate = useTaskListStore((state) => state.isNeedUpdate)
+    const resetUpdate = useTaskListStore((state) => state.resetUpdate)
+
+
     const getTasks = async () => {
         await axios
             .get<ApiResponse>("http://localhost:8080/tasks")
@@ -31,6 +37,13 @@ const TaskBlock = () => {
     useEffect(() => {
         getTasks();
     }, [])
+
+    useEffect(() => {
+        if (isNeedUpdate) {
+            getTasks();
+            resetUpdate();
+        }
+    }, [isNeedUpdate])
 
 
     return (
