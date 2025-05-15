@@ -6,7 +6,6 @@ type BadgeProps = {
 }
 
 const Badge: React.FC<BadgeProps> = ({ children, color }) => {
-    console.log(color)
     return (
         <>
             <div className={`relative py-1 px-2 pl-5  text-mainblack rounded-3xl w-fit

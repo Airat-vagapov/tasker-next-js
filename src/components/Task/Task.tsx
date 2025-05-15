@@ -2,6 +2,7 @@ import { ITask } from "@/types/task";
 
 import Badge from '@/ui/Badge/Badge';
 import { priorityColors } from "@/data/priority";
+import { capitalizeFirstLetter } from "@/utils/scripts";
 
 const Task: React.FC<ITask> = ({
     id,
@@ -23,7 +24,7 @@ const Task: React.FC<ITask> = ({
             }
         >
             <div className="flex gap-2">
-                {status && <Badge>{status}</Badge>}
+                {status && <Badge>{capitalizeFirstLetter(status)}</Badge>}
                 {priority && <Badge color={priorityColors[priority as keyof typeof priorityColors]}>{priority}</Badge>}
                 <div className="ml-auto text-s text-gray">#{id}</div>
             </div>

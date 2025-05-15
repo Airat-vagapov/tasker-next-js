@@ -20,10 +20,10 @@
     --purple: #cbcbf8;
     --purpleFull: #4318ff;
     --mainOrange: #f6901a;
-    --orange: #ffeacb;
-    --orangeFull: #d89b3f;
-    --yellow: #f5e8a0;
-    --yellowFull: #ccb531;
+    --orange: #f6daaf;
+    --orangeFull: #e39520;
+    --yellow: #fcf3c0;
+    --yellowFull: #d0b82f;
 }
 
 @theme inline {
@@ -68,4 +68,8 @@ body {
 
 input:focus {
     outline: none;
+}
+
+.logo {
+    font-family: var(--font-oswald) sans-serif;
 }
