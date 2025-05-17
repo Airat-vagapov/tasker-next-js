@@ -30,13 +30,7 @@ const Task: React.FC<ITask> = ({
             </div>
 
             <p className="text-3xl">{title} </p>
-            {/* <p></p> */}
-            {/* <p>{description}</p> */}
             {author && <p>{author}</p>}
-
-            {/* <p>{created_at}</p>
-            <p>{updated_at}</p>
-            <p>{due_date}</p> */}
         </div>
     );
 };

@@ -4,11 +4,11 @@ type PageTitleProps = {
 
 const PageTitle: React.FC<PageTitleProps> = ({ children }) => {
     const getTaskById = async (id: string) => {
-        
+
     }
     return (
         <>
-            <h1 className="text-2xl">{children}</h1>
+            <h1 className="text-3xl font-bold">{children}</h1>
         </>
     );
 }
