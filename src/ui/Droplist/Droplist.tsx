@@ -44,7 +44,7 @@ const Droplist = <T,>({
 
     return (
         <div className="relative" ref={selectRef}>
-            <div onClick={() => setListIsOpen(true)}>
+            <div className='relative' onClick={() => setListIsOpen(true)}>
                 <Input
                     id={id}
                     name={name}

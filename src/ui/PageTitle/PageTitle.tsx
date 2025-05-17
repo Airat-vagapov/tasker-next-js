@@ -1,0 +1,16 @@
+type PageTitleProps = {
+    children: React.ReactNode;
+}
+
+const PageTitle: React.FC<PageTitleProps> = ({ children }) => {
+    const getTaskById = async (id: string) => {
+        
+    }
+    return (
+        <>
+            <h1 className="text-2xl">{children}</h1>
+        </>
+    );
+}
+
+export default PageTitle;
