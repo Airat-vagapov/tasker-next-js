@@ -84,8 +84,6 @@ export default async function Page({ params }: Props) {
                                                             {task.status && <p>{task.due_date}</p>}
                                                         </FieldRow>
                                                     }
-
-
                                                 </div>
                                             </ContentBlock>
                                         </div>
