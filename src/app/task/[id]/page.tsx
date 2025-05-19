@@ -1,8 +1,12 @@
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
+import { priorityColors } from "@/data/priority";
+import Badge from "@/ui/Badge/Badge";
 import Container from "@/ui/Container/Container";
 import Content from "@/ui/Content/Content";
 import ContentBlock from "@/ui/ContentBlock/ContentBlock";
+import FieldRow from "@/ui/FieldRow/FieldRow";
 import PageTitle from "@/ui/PageTitle/PageTitle";
+import { capitalizeFirstLetter } from "@/utils/scripts";
 
 type Props = {
     params: {
@@ -42,7 +46,7 @@ export default async function Page({ params }: Props) {
                                     <PageTitle>{`#${task.id} ${task.title}`}</PageTitle>
                                     <div className="flex gap-10 items-stretch">
                                         <div className="basis-full">
-                                            <ContentBlock>
+                                            <ContentBlock classes="h-full">
                                                 <div className="flex flex-col gap-4">
                                                     <p className="text-xl">Description</p>
                                                     <p>{task && task.description}</p>
@@ -53,7 +57,35 @@ export default async function Page({ params }: Props) {
                                             <ContentBlock classes="h-full">
                                                 <div className="flex flex-col gap-4">
                                                     <p className="text-xl">Task information</p>
-                                                    <p>{task && task.priority}</p>
+                                                    {/* <p>{task && task.priority}</p> */}
+
+                                                    {task.status &&
+                                                        <FieldRow label='Status'>
+                                                            {task.status && <Badge>{capitalizeFirstLetter(task.status)}</Badge>}
+                                                        </FieldRow>
+                                                    }
+                                                    {task.priority &&
+                                                        <FieldRow label='Priority'>
+                                                            <Badge color={priorityColors[task.priority as keyof typeof priorityColors]}>{task.priority}</Badge>
+                                                        </FieldRow>
+                                                    }
+                                                    {task.created_at &&
+                                                        <FieldRow label='Created at'>
+                                                            {task.status && <p>{task.created_at}</p>}
+                                                        </FieldRow>
+                                                    }
+                                                    {task.updated_at &&
+                                                        <FieldRow label='Updated at'>
+                                                            {task.status && <p>{task.updated_at}</p>}
+                                                        </FieldRow>
+                                                    }
+                                                    {task.due_date &&
+                                                        <FieldRow label='Due date'>
+                                                            {task.status && <p>{task.due_date}</p>}
+                                                        </FieldRow>
+                                                    }
+
+
                                                 </div>
                                             </ContentBlock>
                                         </div>
