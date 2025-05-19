@@ -1,3 +1,5 @@
+'use client'
+
 import Container from "@/ui/Container/Container";
 import AddNewTask from '@/components/AddNewTask/AddNewTask'
 import Logo from "@/ui/Logo/Logo";
