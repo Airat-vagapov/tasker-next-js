@@ -3,9 +3,10 @@ import React from "react";
 type BadgeProps = {
     children: React.ReactNode;
     color?: string
+    textSize: string;
 }
 
-const Badge: React.FC<BadgeProps> = ({ children, color }) => {
+const Badge: React.FC<BadgeProps> = ({ children, color, textSize }) => {
     return (
         <>
             <div className={`relative py-1 px-2 pl-5  text-mainblack rounded-3xl w-fit
