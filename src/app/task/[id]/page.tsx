@@ -62,12 +62,18 @@ export default async function Page({ params }: Props) {
 
                                                     {task.status &&
                                                         <FieldRow label='Status'>
-                                                            {task.status && <Badge>{capitalizeFirstLetter(task.status)}</Badge>}
+                                                            {task.status && <Badge textSize="text-xs">
+                                                                {capitalizeFirstLetter(task.status)}
+                                                            </Badge>}
                                                         </FieldRow>
                                                     }
                                                     {task.priority &&
                                                         <FieldRow label='Priority'>
-                                                            <Badge color={priorityColors[task.priority as keyof typeof priorityColors]}>{task.priority}</Badge>
+                                                            <Badge
+                                                                textSize="text-xs"
+                                                                color={priorityColors[task.priority as keyof typeof priorityColors]}
+                                                            >{task.priority}
+                                                            </Badge>
                                                         </FieldRow>
                                                     }
                                                     {task.created_at &&
