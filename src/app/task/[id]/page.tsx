@@ -19,7 +19,7 @@ export default async function Page({ params }: Props) {
     const { id } = await params;
     try {
         const res = await fetch(`http://localhost:8080/task/${id}`, {
-            next: { revalidate: 60 },
+            next: { revalidate: 0 },
         })
 
         let task;
@@ -37,7 +37,6 @@ export default async function Page({ params }: Props) {
         task = data.result;
         console.log(task)
         const time = convertStringToTime(task.due_date);
-        console.log(time)
         return (
             <>
                 <Container>
@@ -45,8 +44,8 @@ export default async function Page({ params }: Props) {
                         {task &&
                             (
                                 <div className="flex flex-col gap-6">
-                                    {/* <TaskDetailHeader>{`#${task.id} ${task.title}`}</TaskDetailHeader> */}
-                                    <PageTitle>{`#${task.id} ${task.title}`}</PageTitle>
+                                    <TaskDetailHeader task={task}>{`#${task.id} ${task.title}`}</TaskDetailHeader>
+                                    {/* <PageTitle>{`#${task.id} ${task.title}`}</PageTitle> */}
                                     <div className="flex gap-10 items-stretch">
                                         <div className="basis-full">
                                             <ContentBlock classes="h-full">

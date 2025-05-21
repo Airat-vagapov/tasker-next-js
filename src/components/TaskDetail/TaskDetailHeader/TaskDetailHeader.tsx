@@ -1,15 +1,17 @@
 import TaskStatusChangeButton from "@/components/Task/TaskStatusChangeButton/TaskStatusChangeButton";
+import { ITask } from "@/types/task";
 import PageTitle from "@/ui/PageTitle/PageTitle";
 
 type PageTitleProps = {
     children: React.ReactNode;
+    task: ITask;
 }
 
-const TaskDetailHeader: React.FC<PageTitleProps> = ({ children }) => {
+const TaskDetailHeader: React.FC<PageTitleProps> = ({ children, task }) => {
     return (
-        <div>
+        <div className="flex justify-between items-center">
             <PageTitle>{children}</PageTitle>
-            <TaskStatusChangeButton></TaskStatusChangeButton>
+            <TaskStatusChangeButton task={task}></TaskStatusChangeButton>
 
         </div>
     )

@@ -1,0 +1,1 @@
+const statuses:string[] = ['New', 'Backlog', 'In progress', 'Completed'];
