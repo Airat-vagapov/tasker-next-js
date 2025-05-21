@@ -11,9 +11,8 @@ type TaskStatusChangeButtonProps = {
 
 const TaskStatusChangeButton: React.FC<TaskStatusChangeButtonProps> = ({ task }) => {
     const router = useRouter();
-    
+
     const taskStatusChange = async () => {
-        // const newId = (task.status_id ?? 0) + 1
         task.status_id = (task.status_id ?? 0) + 1
         console.log(task)
 
