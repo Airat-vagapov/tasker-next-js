@@ -6,7 +6,7 @@ import Content from "@/ui/Content/Content";
 import ContentBlock from "@/ui/ContentBlock/ContentBlock";
 import FieldRow from "@/ui/FieldRow/FieldRow";
 import PageTitle from "@/ui/PageTitle/PageTitle";
-import { capitalizeFirstLetter } from "@/utils/scripts";
+import { capitalizeFirstLetter, convertStringToTime } from "@/utils/scripts";
 
 type Props = {
     params: {
@@ -22,7 +22,6 @@ export default async function Page({ params }: Props) {
         })
 
         let task;
-        console.log(res.ok)
         if (!res.ok) {
             if (res.status === 404) {
                 throw new Error("Задача не найдена (404)");
@@ -36,6 +35,8 @@ export default async function Page({ params }: Props) {
 
         task = data.result;
         console.log(task)
+        const time = convertStringToTime(task.due_date);
+        console.log(time)
         return (
             <>
                 <Container>
@@ -71,17 +72,17 @@ export default async function Page({ params }: Props) {
                                                     }
                                                     {task.created_at &&
                                                         <FieldRow label='Created at'>
-                                                            {task.status && <p>{task.created_at}</p>}
+                                                            {task.status && <p>{convertStringToTime(task.created_at)}</p>}
                                                         </FieldRow>
                                                     }
                                                     {task.updated_at &&
                                                         <FieldRow label='Updated at'>
-                                                            {task.status && <p>{task.updated_at}</p>}
+                                                            {task.status && <p>{convertStringToTime(task.updated_at)}</p>}
                                                         </FieldRow>
                                                     }
                                                     {task.due_date &&
                                                         <FieldRow label='Due date'>
-                                                            {task.status && <p>{task.due_date}</p>}
+                                                            {task.status && <p>{convertStringToTime(task.due_date)}</p>}
                                                         </FieldRow>
                                                     }
                                                 </div>

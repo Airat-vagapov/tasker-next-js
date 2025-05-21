@@ -1,4 +1,5 @@
 'use client'
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Logo: React.FC = () => {
@@ -22,9 +23,15 @@ const Logo: React.FC = () => {
         return () => { clearInterval(classRandomInterval) }
     }, [])
 
-    return <div className={`logo px-4 py-2 font-bold transition-all duration-500
+    return (
+        <Link href={"/"}>
+            <div className={`logo px-4 py-2 font-bold transition-all duration-500
         ${colorClass ? colorClass : "bg-blue"}
-    `}>Tasker</div>;
+            `}>Tasker
+            </div>
+        </Link>
+    )
+
 };
 
 export default Logo;

@@ -3,7 +3,7 @@ import React from "react";
 type BadgeProps = {
     children: React.ReactNode;
     color?: string
-    textSize: string;
+    textSize?: string;
 }
 
 const Badge: React.FC<BadgeProps> = ({ children, color, textSize }) => {
