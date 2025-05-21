@@ -1,4 +1,5 @@
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
+import TaskDetailHeader from "@/components/TaskDetail/TaskDetailHeader/TaskDetailHeader";
 import { priorityColors } from "@/data/priority";
 import Badge from "@/ui/Badge/Badge";
 import Container from "@/ui/Container/Container";
@@ -44,6 +45,7 @@ export default async function Page({ params }: Props) {
                         {task &&
                             (
                                 <div className="flex flex-col gap-6">
+                                    {/* <TaskDetailHeader>{`#${task.id} ${task.title}`}</TaskDetailHeader> */}
                                     <PageTitle>{`#${task.id} ${task.title}`}</PageTitle>
                                     <div className="flex gap-10 items-stretch">
                                         <div className="basis-full">
