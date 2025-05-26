@@ -4,6 +4,8 @@ import Badge from '@/ui/Badge/Badge';
 import { priorityColors } from "@/data/priority";
 import { capitalizeFirstLetter } from "@/utils/scripts";
 import Link from "next/link";
+import Button from "@/ui/Button/Button";
+import DeleteButton from "./DeleteButton/DeleteButton";
 
 const Task: React.FC<ITask> = ({
     id,
@@ -20,22 +22,27 @@ const Task: React.FC<ITask> = ({
 
     return (
         <>
-            <Link href={`/task/${id}`}>
-                <div
-                    className={
-                        "p-8 flex flex-col justify-center gap-4 rounded-xl bg-lightblack text-white"
-                    }
-                >
-                    <div className="flex gap-2">
-                        {status && <Badge>{capitalizeFirstLetter(status)}</Badge>}
-                        {priority && <Badge color={priorityColors[priority as keyof typeof priorityColors]}>{priority}</Badge>}
-                        <div className="ml-auto text-s text-gray">#{id}</div>
-                    </div>
 
-                    <p className="text-3xl">{title} </p>
-                    {author && <p>{author}</p>}
+            <div
+                className={
+                    "p-8 flex flex-col justify-center gap-4 rounded-xl bg-lightblack text-white"
+                }
+            >
+                <div className="flex gap-2">
+                    {status && <Badge>{capitalizeFirstLetter(status)}</Badge>}
+                    {priority && <Badge color={priorityColors[priority as keyof typeof priorityColors]}>{priority}</Badge>}
+                    <div className="ml-auto text-s text-gray">#{id}</div>
                 </div>
-            </Link>
+
+                <p className="text-3xl">{title} </p>
+                {author && <p>{author}</p>}
+
+                <Link href={`/task/${id}`}>
+                    <Button text={'Show details'}></Button>
+                </Link>
+                <DeleteButton id={id} />
+            </div>
+
         </>
     );
 };
