@@ -33,8 +33,6 @@ const ErrorBottom: React.FC<ErrorBottomProps> = ({ errorText }) => {
                             <p>An error occurred. Please try again.</p>
                         }
                     </div>
-
-
                     <Button
                         text="Close"
                         onClick={handleClose}

@@ -101,18 +101,15 @@ export default async function Page({ params }: Props) {
                         }
                     </Content>
                 </Container>
+                
 
             </>
         )
     } catch (err) {
-        // console.error(err);
-        // console.error((err as Error).message);
-
         return (
             <>
                 <ErrorBottom errorText={(err as Error).message} />
             </>
-
         )
     }
 }

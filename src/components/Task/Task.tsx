@@ -6,20 +6,17 @@ import { capitalizeFirstLetter } from "@/utils/scripts";
 import Link from "next/link";
 import Button from "@/ui/Button/Button";
 import DeleteButton from "./DeleteButton/DeleteButton";
+import TaskContextMenu from "@/components/Task/TaskContextMenu/TaskContextMenu";
 
-const Task: React.FC<ITask> = ({
-    id,
-    title,
-    description,
-    author,
-    status,
-    priority,
-    created_at,
-    updated_at,
-    due_date,
+type TaskProps = {
+    task: ITask;
+    taskDeleteHandler: (status: boolean) => void,
+}
+
+const Task: React.FC<TaskProps> = ({
+    task,
+    taskDeleteHandler
 }) => {
-
-
     return (
         <>
 
@@ -29,20 +26,24 @@ const Task: React.FC<ITask> = ({
                 }
             >
                 <div className="flex gap-2">
-                    {status && <Badge>{capitalizeFirstLetter(status)}</Badge>}
-                    {priority && <Badge color={priorityColors[priority as keyof typeof priorityColors]}>{priority}</Badge>}
-                    <div className="ml-auto text-s text-gray">#{id}</div>
+                    {task?.status && <Badge>{capitalizeFirstLetter(task.status)}</Badge>}
+                    {task?.priority && <Badge color={priorityColors[task.priority as keyof typeof priorityColors]}>{task.priority}</Badge>}
+                    {/* <div className="ml-auto text-s text-gray">#{task?.id}</div> */}
+                    <div className="ml-auto"><TaskContextMenu /></div>
+
                 </div>
 
-                <p className="text-3xl">{title} </p>
-                {author && <p>{author}</p>}
+                <div className="flex items-baseline gap-2">
+                    <span className="text-xl text-gray">#{task?.id}</span>
+                    <p className="text-3xl">{task?.title} </p>
+                </div>
+                {task && <p>{task.author}</p>}
 
-                <Link href={`/task/${id}`}>
+                <Link href={`/task/${task?.id}`}>
                     <Button text={'Show details'}></Button>
                 </Link>
-                <DeleteButton id={id} />
+                <DeleteButton id={task?.id} setSuccess={taskDeleteHandler} />
             </div>
-
         </>
     );
 };
