@@ -39,10 +39,14 @@ const Task: React.FC<TaskProps> = ({
                 </div>
                 {task && <p>{task.author}</p>}
 
-                <Link href={`/task/${task?.id}`}>
-                    <Button text={'Show details'}></Button>
-                </Link>
-                <DeleteButton id={task?.id} setSuccess={taskDeleteHandler} />
+                <div className="w-fit">
+                    <Link href={`/task/${task?.id}`}>
+                        <Button text={'Show details'}></Button>
+                    </Link>
+                </div>
+                <div className="w-fit">
+                    <DeleteButton id={task?.id} setSuccess={taskDeleteHandler} />
+                </div>
             </div>
         </>
     );
