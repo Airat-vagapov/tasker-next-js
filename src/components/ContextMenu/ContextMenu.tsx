@@ -6,7 +6,7 @@ const ContextMenu = () => {
     const { isOpen, setIsOpen } = useContextMenu();
 
     return (
-        <div className="relative">
+        <div className="context-menu relative">
             <div onClick={() => setIsOpen(!isOpen)}>
                 <Icon name='more_vert' hovered={true}></Icon>
             </div>
