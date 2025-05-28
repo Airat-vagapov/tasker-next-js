@@ -16,8 +16,8 @@ const ContextMenu = () => {
                 ${isOpen ? 'opacity-100' : 'opacity-0'}`
             }>
                 <ul className="flex flex-col gap-2">
-                    <li className="px-2">111</li>
-                    <li className="px-2">222</li>
+                    <li className="px-3 cursor-pointer hover:text-blue transition-all duration-300">111</li>
+                    <li className="px-3">222</li>
                 </ul>
             </div>
         </div>
