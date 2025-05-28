@@ -44,9 +44,6 @@ const Task: React.FC<TaskProps> = ({
                         <Button text={'Show details'}></Button>
                     </Link>
                 </div>
-                <div className="w-fit">
-                    <DeleteButton id={task?.id} setSuccess={taskDeleteHandler} />
-                </div>
             </div>
         </>
     );

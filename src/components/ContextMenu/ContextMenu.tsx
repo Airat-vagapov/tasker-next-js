@@ -27,11 +27,9 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ menuData }) => {
                                     <li key={index} className="flex gap-2 px-3 cursor-pointer 
                                         hover:text-blue transition-all duration-300"
                                         onClick={item.action}
-
                                     >
                                         <Icon {...item.icon}></Icon>
                                         {item.name}
-
                                     </li>
                                 )
                             })}
