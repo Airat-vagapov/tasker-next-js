@@ -29,7 +29,7 @@ const Task: React.FC<TaskProps> = ({
                     {task?.status && <Badge>{capitalizeFirstLetter(task.status)}</Badge>}
                     {task?.priority && <Badge color={priorityColors[task.priority as keyof typeof priorityColors]}>{task.priority}</Badge>}
                     {/* <div className="ml-auto text-s text-gray">#{task?.id}</div> */}
-                    <div className="ml-auto"><TaskContextMenu /></div>
+                    <div className="ml-auto"><TaskContextMenu id={task.id} deleteHandler={taskDeleteHandler} /></div>
 
                 </div>
 

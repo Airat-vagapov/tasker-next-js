@@ -29,7 +29,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
         `}
         >
             <div
-                className={`bg-lightblack p-6 w-full max-w-md relative rounded-lg z-50 transform transition-all duration-300 
+                className={`bg-lightblack p-6 w-full h-fit max-w-md relative rounded-lg z-50 transform transition-all duration-300 
                     ${isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
                     } `}
             >
