@@ -1,4 +1,4 @@
-type IconProps = {
+export type IconProps = {
     name: string;
     size?: number;
     color?: string | "white";
@@ -8,7 +8,7 @@ type IconProps = {
 const Icon = ({ name, size, color, hovered = false }: IconProps) => {
     return (
         <>
-            <div className={`${hovered ? 'hover:text-blueHover transition-all duration-300' : ''}`}>
+            <div className={`h-fit flex items-center justify-center ${hovered ? 'hover:text-blueHover transition-all duration-300' : ''}`}>
                 <span
                     className={`
                     text-${color}

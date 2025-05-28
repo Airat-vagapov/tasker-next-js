@@ -14,6 +14,7 @@ const AddNewTask = () => {
             <Button
                 onClick={() => setModalIsOpen(true)}
                 text={"Add new task"}
+                icon={{ name: 'add_box', size: 24 }}
             />
             <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
                 <AddNewTaskForm />
