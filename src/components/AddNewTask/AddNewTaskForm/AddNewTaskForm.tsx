@@ -16,6 +16,7 @@ import { ITask } from "@/types/task"
 import { priorityData } from '@/data/priority'
 
 import { useTaskListStore } from "@/store/store"
+import Textarea from "@/ui/Textarea/Textarea";
 
 type AddNewTaskFormValues = {
     title: string;
@@ -76,15 +77,25 @@ const AddNewTaskForm = () => {
                         value={addNewTaskForm.values.title}
                         errorText={errors.title}
                     />
-                    <Input
+                    {/* <Input
                         label="Description"
-                        id="text"
+                        id="description"
                         name="description"
                         inptType="text"
                         onChange={addNewTaskForm.handleChange}
                         onBlur={addNewTaskForm.handleBlur}
                         value={addNewTaskForm.values.description}
                         errorText={errors.description}
+                    /> */}
+
+                    <Textarea
+                        label="Description"
+                        name="description"
+                        id="description"
+                        onChange={addNewTaskForm.handleChange}
+                        onBlur={addNewTaskForm.handleBlur}
+                        value={addNewTaskForm.values.description}
+                        // errorText={errors.description}
                     />
 
                     <Droplist

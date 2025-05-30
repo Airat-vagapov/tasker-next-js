@@ -14,8 +14,6 @@ const TaskStatusChangeButton: React.FC<TaskStatusChangeButtonProps> = ({ task })
 
     const taskStatusChange = async () => {
         task.status_id = (task.status_id ?? 0) + 1
-        console.log(task)
-
         const res = await axios.post(`http://localhost:8080/task/${task.id}`, { task })
         router.refresh()
     }
