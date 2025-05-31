@@ -1,4 +1,5 @@
 import { ChangeEvent, FocusEvent, useRef } from "react";
+import Icon from '@/ui/Icon/Icon';
 
 type InputProps = {
     label?: string;
@@ -10,6 +11,7 @@ type InputProps = {
     value: string | number;
     errorText?: string;
     disable?: boolean;
+    arrow?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -22,6 +24,7 @@ const Input: React.FC<InputProps> = ({
     value,
     errorText,
     disable,
+    arrow,
 }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const handleFocus = () => {
@@ -37,8 +40,8 @@ const Input: React.FC<InputProps> = ({
                 <input
                     ref={inputRef}
                     className={`bg-mainblack w-full py-4.5 px-3 color-mainwhite rounded-md h-14 transition-all duration-300 
-                    border-1  focus:border-blue 
-                    ${errorText ? "border-errorRed" : "border-mainblack"}
+                    border-1
+                    ${errorText ? "border-errorRed focus:border-errorRed" : "border-transparent focus:border-blue "}
                     ${disable ? 'cursor-pointer' : ''}
                     `}
                     id={id}
@@ -49,6 +52,12 @@ const Input: React.FC<InputProps> = ({
                     onBlur={onBlur}
                     value={value}
                 />
+                {arrow &&
+                    <div className='absolute top-1/2 -translate-y-1/2 right-2 text-gray'>
+                        <Icon name={'keyboard_arrow_down'} />
+                    </div>
+                }
+
                 <span
                     className={`absolute top-[4px] left-[12px] text-[12px] text-errorRed transition-all duration-300
                     ${errorText ? "opacity-100" : "opacity-0"}

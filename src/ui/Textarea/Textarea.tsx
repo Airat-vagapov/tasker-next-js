@@ -27,11 +27,11 @@ const Textarea: React.FC<TextareaProps> = ({
             {label && <p>{label}</p>}
             <div className="relative">
                 <textarea
-                    className={`p-3 bg-mainblack text-mainwhite
-                border-1 focus:border-blue
+                    className={`px-3 py-3 bg-mainblack text-mainwhite
+                border-1 
                 transition-all duration-300 
                 rounded-md w-full
-                ${errorText ? "border-errorRed" : "border-transparent"}`}
+                ${errorText ? "border-errorRed py-5 focus:border-errorRed" : "border-transparent focus:border-blue"}`}
                     // ref={textAreaRef}
                     name={name}
                     id={id}

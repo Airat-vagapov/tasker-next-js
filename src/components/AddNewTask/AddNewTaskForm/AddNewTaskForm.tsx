@@ -27,6 +27,7 @@ type AddNewTaskFormValues = {
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
+    // const [set]
     const updateState = useTaskListStore((state) => state.changeUpdate)
     const addNewTask = async (task: ITask) => {
         const res = await axios.post("http://localhost:8080/task", task)
@@ -77,16 +78,6 @@ const AddNewTaskForm = () => {
                         value={addNewTaskForm.values.title}
                         errorText={errors.title}
                     />
-                    {/* <Input
-                        label="Description"
-                        id="description"
-                        name="description"
-                        inptType="text"
-                        onChange={addNewTaskForm.handleChange}
-                        onBlur={addNewTaskForm.handleBlur}
-                        value={addNewTaskForm.values.description}
-                        errorText={errors.description}
-                    /> */}
 
                     <Textarea
                         label="Description"

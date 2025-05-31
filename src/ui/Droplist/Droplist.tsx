@@ -45,6 +45,7 @@ const Droplist = <T,>({
     return (
         <div className="relative" ref={selectRef}>
             <div className='relative' onClick={() => setListIsOpen(true)}>
+
                 <Input
                     id={id}
                     name={name}
@@ -54,7 +55,9 @@ const Droplist = <T,>({
                     onBlur={onBlur}
                     value={value}
                     disable={true}
+                    arrow={true}
                 />
+                
             </div>
 
             {listIsOpen &&
