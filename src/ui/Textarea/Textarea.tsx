@@ -26,6 +26,10 @@ const Textarea: React.FC<TextareaProps> = ({
         <div className="flex flex-col gap-2">
             {label && <p>{label}</p>}
             <textarea
+                className="p-3 bg-mainblack text-mainwhite
+                border-1 border-transparent focus:border-blue
+                transition-all duration-300 
+                rounded-md"
                 // ref={textAreaRef}
                 name={name}
                 id={id}
