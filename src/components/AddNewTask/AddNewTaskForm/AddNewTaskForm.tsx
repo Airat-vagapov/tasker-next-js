@@ -95,7 +95,7 @@ const AddNewTaskForm = () => {
                         onChange={addNewTaskForm.handleChange}
                         onBlur={addNewTaskForm.handleBlur}
                         value={addNewTaskForm.values.description}
-                        // errorText={errors.description}
+                        errorText={errors.description}
                     />
 
                     <Droplist

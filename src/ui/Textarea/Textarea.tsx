@@ -25,20 +25,30 @@ const Textarea: React.FC<TextareaProps> = ({
     return (
         <div className="flex flex-col gap-2">
             {label && <p>{label}</p>}
-            <textarea
-                className="p-3 bg-mainblack text-mainwhite
-                border-1 border-transparent focus:border-blue
+            <div className="relative">
+                <textarea
+                    className={`p-3 bg-mainblack text-mainwhite
+                border-1 focus:border-blue
                 transition-all duration-300 
-                rounded-md"
-                // ref={textAreaRef}
-                name={name}
-                id={id}
-                cols={30}
-                rows={10}
-                onChange={onChange}
-                onBlur={onBlur}
-                value={value}
-            ></textarea>
+                rounded-md w-full
+                ${errorText ? "border-errorRed" : "border-transparent"}`}
+                    // ref={textAreaRef}
+                    name={name}
+                    id={id}
+                    cols={30}
+                    rows={10}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                ></textarea>
+                <span
+                    className={`absolute top-[4px] left-[12px] text-[12px] text-errorRed transition-all duration-300
+                    ${errorText ? "opacity-100" : "opacity-0"}
+                    `}
+                >
+                    {errorText}
+                </span>
+            </div>
         </div>
     )
 }
