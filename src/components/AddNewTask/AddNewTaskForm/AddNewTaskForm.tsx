@@ -27,13 +27,14 @@ type AddNewTaskFormValues = {
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
-    // const [set]
+    // const [fetchError, setFetchError] = useState<any>(null);
     const updateState = useTaskListStore((state) => state.changeUpdate)
     const addNewTask = async (task: ITask) => {
         const res = await axios.post("http://localhost:8080/task", task)
         return res
     };
 
+    let fetchError;
     const addNewTaskForm = useFormik<AddNewTaskFormValues>({
         initialValues: {
             title: '',
@@ -53,6 +54,7 @@ const AddNewTaskForm = () => {
                 updateState()
             } catch (err) {
                 console.error(err);
+                fetchError = err;
                 setTaskIsAdded(false);
                 setTaskAddError(true);
             }
@@ -60,6 +62,7 @@ const AddNewTaskForm = () => {
     });
 
     const { errors, touched } = addNewTaskForm;
+    console.log(fetchError)
     return (
         <div className="relative">
             {!taskIsAdded && !taskAddError && (
