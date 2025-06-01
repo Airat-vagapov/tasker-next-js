@@ -1,5 +1,6 @@
 "use client";
 
+import { AxiosError } from "axios";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -17,6 +18,7 @@ import { priorityData } from '@/data/priority'
 
 import { useTaskListStore } from "@/store/store"
 import Textarea from "@/ui/Textarea/Textarea";
+import Accordeon from "@/ui/Accordeon/Accordeon";
 
 type AddNewTaskFormValues = {
     title: string;
@@ -27,14 +29,13 @@ type AddNewTaskFormValues = {
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
-    // const [fetchError, setFetchError] = useState<any>(null);
+    const [fetchError, setFetchError] = useState<AxiosError | null>(null);
     const updateState = useTaskListStore((state) => state.changeUpdate)
     const addNewTask = async (task: ITask) => {
         const res = await axios.post("http://localhost:8080/task", task)
         return res
     };
 
-    let fetchError;
     const addNewTaskForm = useFormik<AddNewTaskFormValues>({
         initialValues: {
             title: '',
@@ -54,7 +55,7 @@ const AddNewTaskForm = () => {
                 updateState()
             } catch (err) {
                 console.error(err);
-                fetchError = err;
+                setFetchError(err);
                 setTaskIsAdded(false);
                 setTaskAddError(true);
             }
@@ -119,7 +120,16 @@ const AddNewTaskForm = () => {
             {taskAddError && (
                 <ErrorBlock
                     title="Ops! Error!"
-                    text="Something went wrong. Please try again."
+                    text={
+                        <>
+                            <Accordeon title="Details">
+                                {fetchError?.message ? fetchError.message : "Unknown error"}
+                                <br />
+                                {fetchError?.response?.data?.message ? fetchError?.response?.data?.message : 'No error data'}
+                            </Accordeon>
+
+                        </>
+                    }
                     actionText="Try again"
                     action={() => addNewTaskForm.handleSubmit()}
                 />

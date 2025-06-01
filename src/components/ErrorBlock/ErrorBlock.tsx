@@ -4,7 +4,7 @@ import Title from "@/ui/Title/Title"
 
 type ErrorBlockProps = {
     title: string;
-    text: string;
+    text: React.ReactNode | string;
     actionText?: string;
     action?: () => void;
 };
