@@ -142,7 +142,6 @@ const AddNewTaskForm = () => {
                                     </>
                                 }
                             >
-
                             </Accordeon>
 
                         </>
