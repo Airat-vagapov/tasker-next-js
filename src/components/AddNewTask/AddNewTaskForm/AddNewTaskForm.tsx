@@ -29,7 +29,10 @@ type AddNewTaskFormValues = {
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
-    const [fetchError, setFetchError] = useState<AxiosError | null>(null);
+    // const [fetchError, setFetchError] = useState<AxiosError | Error | null>(null);
+    // TODO:
+    // Добавить типизацию ошибки
+    const [fetchError, setFetchError] = useState<any>(null);
     const updateState = useTaskListStore((state) => state.changeUpdate)
     const addNewTask = async (task: ITask) => {
         const res = await axios.post("http://localhost:8080/task", task)
@@ -53,9 +56,12 @@ const AddNewTaskForm = () => {
                 setTaskIsAdded(true);
                 addNewTaskForm.resetForm();
                 updateState()
+                setFetchError(null);
             } catch (err) {
-                console.error(err);
-                setFetchError(err);
+                if (axios.isAxiosError(err)) {
+                    setFetchError(err);
+                }
+                // console.error(err);
                 setTaskIsAdded(false);
                 setTaskAddError(true);
             }
@@ -63,7 +69,11 @@ const AddNewTaskForm = () => {
     });
 
     const { errors, touched } = addNewTaskForm;
-    console.log(fetchError)
+
+    // Детали ошибки
+    const errorMsg = fetchError?.message || "Unknown error";
+    const errorDetail = fetchError?.response.data.message.detail || 'No error data';
+
     return (
         <div className="relative">
             {!taskIsAdded && !taskAddError && (
@@ -122,10 +132,17 @@ const AddNewTaskForm = () => {
                     title="Ops! Error!"
                     text={
                         <>
-                            <Accordeon title="Details">
-                                {fetchError?.message ? fetchError.message : "Unknown error"}
-                                <br />
-                                {fetchError?.response?.data?.message ? fetchError?.response?.data?.message : 'No error data'}
+                            <Accordeon
+                                title="Details"
+                                content={
+                                    <>
+                                        {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
+                                        <br />
+                                        {typeof errorDetail == "object" ? JSON.stringify(errorDetail) : errorDetail}
+                                    </>
+                                }
+                            >
+
                             </Accordeon>
 
                         </>
