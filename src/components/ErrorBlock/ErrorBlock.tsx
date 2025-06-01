@@ -15,7 +15,7 @@ const ErrorBlock: React.FC<ErrorBlockProps> = ({ title, text, action, actionText
             <Icon name={"error"} size={48} color={"errorRed"} />
             <div className="flex flex-col items-center justify-center gap-2">
                 <Title>{title}</Title>
-                <p className="text-base">{text}</p>
+                <div className="text-base">{text}</div>
                 {actionText &&
                     <TextLink type="action" action={action}>
                         {actionText}
