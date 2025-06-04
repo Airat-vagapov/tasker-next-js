@@ -4,7 +4,7 @@ import { IContextMenuData } from "@/types/global";
 
 type TaskContextMenuProps = {
     id: number;
-    deleteHandler: () => void
+    deleteHandler?: () => void
 }
 
 const TaskContextMenu: React.FC<TaskContextMenuProps> = ({ id, deleteHandler }) => {

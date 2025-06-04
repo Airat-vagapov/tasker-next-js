@@ -74,3 +74,16 @@ textarea:focus {
 .logo {
     font-family: var(--font-oswald) sans-serif;
 }
+
+/* Для WebKit браузеров (Chrome, Safari, новый Edge) */
+::-webkit-scrollbar {
+    display: none;
+}
+
+.modal {
+    /* Для Firefox */
+    scrollbar-width: none;
+
+    /* Для IE и Edge */
+    -ms-overflow-style: none;
+}

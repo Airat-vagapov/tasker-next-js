@@ -12,6 +12,7 @@ type InputProps = {
     errorText?: string;
     disable?: boolean;
     arrow?: boolean;
+    listIsOpen?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -25,6 +26,7 @@ const Input: React.FC<InputProps> = ({
     errorText,
     disable,
     arrow,
+    listIsOpen
 }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const handleFocus = () => {
@@ -53,7 +55,9 @@ const Input: React.FC<InputProps> = ({
                     value={value}
                 />
                 {arrow &&
-                    <div className='absolute top-1/2 -translate-y-1/2 right-2 text-gray'>
+                    <div className={`absolute top-1/2 -translate-y-1/2 right-2 text-gray duration-300
+                    ${listIsOpen ? 'rotate-180' : ''}
+                    `}>
                         <Icon name={'keyboard_arrow_down'} />
                     </div>
                 }
