@@ -24,7 +24,6 @@ const TaskBlockControl: React.FC<TaskBlockControlProps> = ({ setTaskData }) => {
         setIsDoneTasks(newVal)
 
         const data = await getDoneTasks();
-        console.log(data)
         if (data && newVal) {
             setTaskData(data)
         } else {
