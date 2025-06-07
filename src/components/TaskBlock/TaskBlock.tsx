@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
 import { useTaskStore } from "@/store/store";
 import BottomNotification from "@/components/BottomNotification/BottomNotification";
-import { shallow } from 'zustand/shallow'
+import TaskBlockControl from "@/components/TaskBlock/TaskBlockControl/TaskBlockControl";
 
 interface ApiResponse {
     status: string;
@@ -62,7 +62,8 @@ const TaskBlock = () => {
     }, [isTaskDeleted])
 
     return (
-        <>
+        <div className="flex flex-col gap-5">
+            <TaskBlockControl setTaskData={setTaskData} />
             <div className="flex flex-col gap-8">
                 {taskData &&
                     taskData.map((item: ITask) => (
@@ -88,7 +89,7 @@ const TaskBlock = () => {
                 }}
                 showButton={false}
             />
-        </>
+        </div>
     );
 };
 
