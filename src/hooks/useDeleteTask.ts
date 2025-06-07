@@ -1,7 +1,7 @@
-import { useTaskListStore } from "@/store/store"
+import { useTaskStore } from "@/store/store"
 
 const useDeleteTask = () => {
-    const updateState = useTaskListStore((state) => state.changeUpdate)
+    const updateState = useTaskStore((state) => state.changeUpdate)
 
     const deleteTask = async (id:number, successChanger: (status:boolean) => void) => {
         try {

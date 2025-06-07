@@ -1,6 +1,6 @@
 'use client'
 
-import { useTaskListStore } from "@/store/store";
+import { useTaskStore } from "@/store/store";
 import Button from "@/ui/Button/Button"
 
 type DeleteButtonProps = {
@@ -9,7 +9,7 @@ type DeleteButtonProps = {
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ id, setSuccess }) => {
-    const updateState = useTaskListStore((state) => state.changeUpdate)
+    const updateState = useTaskStore((state) => state.changeUpdate)
 
     const deleteTask = async () => {
         try {

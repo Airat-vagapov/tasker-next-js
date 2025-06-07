@@ -5,9 +5,9 @@ import Task from "@/components/Task/Task";
 import { ITask } from "@/types/task";
 import { useEffect, useState } from "react";
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
-import { useTaskListStore } from "@/store/store";
+import { useTaskStore } from "@/store/store";
 import BottomNotification from "@/components/BottomNotification/BottomNotification";
-import { clear } from "console";
+import { shallow } from 'zustand/shallow'
 
 interface ApiResponse {
     status: string;
@@ -18,9 +18,14 @@ const TaskBlock = () => {
     // States
     const [taskData, setTaskData] = useState<ITask[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const isNeedUpdate = useTaskListStore((state) => state.isNeedUpdate)
-    const resetUpdate = useTaskListStore((state) => state.resetUpdate)
+
+    // Stores
+    const isNeedUpdate = useTaskStore((state) => state.isNeedUpdate)
+    const resetUpdate = useTaskStore((state) => state.resetUpdate)
     const [isTaskDeleted, setIsTaskDeleted] = useState<boolean>(false)
+    const deletedTask = useTaskStore((state) => state.deletedTask)
+    const removeDeletedTask = useTaskStore((state) => state.removeDeletedTask)
+    const updateDeletedTask = useTaskStore((state) => state.updateDeletedTask)
 
 
     const getTasks = async () => {
@@ -64,7 +69,10 @@ const TaskBlock = () => {
                         <Task
                             key={item.id}
                             task={item}
-                            taskDeleteHandler={setIsTaskDeleted}
+                            taskDeleteHandler={() => {
+                                setIsTaskDeleted(true)
+                                updateDeletedTask(item)
+                            }}
                         />
                     ))}
             </div>
@@ -72,9 +80,12 @@ const TaskBlock = () => {
             {error && <ErrorBottom errorText={error} />}
 
             <BottomNotification
-                content={{ title: 'Success', text: 'Task deleted is successful' }}
+                content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
                 showStatus={isTaskDeleted}
-                handleClose={() => setIsTaskDeleted(false)}
+                handleClose={() => {
+                    setIsTaskDeleted(false)
+                    removeDeletedTask()
+                }}
                 showButton={false}
             />
         </>

@@ -16,7 +16,7 @@ import Droplist from "@/ui/Droplist/Droplist";
 import { ITask } from "@/types/task"
 import { priorityData } from '@/data/priority'
 
-import { useTaskListStore } from "@/store/store"
+import { useTaskStore } from "@/store/store"
 import Textarea from "@/ui/Textarea/Textarea";
 import Accordeon from "@/ui/Accordeon/Accordeon";
 
@@ -33,7 +33,7 @@ const AddNewTaskForm = () => {
     // TODO:
     // Добавить типизацию ошибки
     const [fetchError, setFetchError] = useState<any>(null);
-    const updateState = useTaskListStore((state) => state.changeUpdate)
+    const updateState = useTaskStore((state) => state.changeUpdate)
     const addNewTask = async (task: ITask) => {
         const res = await axios.post("http://localhost:8080/task", task)
         return res
