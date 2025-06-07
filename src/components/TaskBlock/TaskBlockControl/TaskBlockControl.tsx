@@ -1,27 +1,43 @@
-import useShowDoneTasks from "@/hooks/useShowDoneTasks";
+import { useState } from "react";
 import { ITask } from "@/types/task"
+
+import useShowDoneTasks from "@/hooks/useShowDoneTasks";
 import Checkbox from "@/ui/Checkbox/Checkbox"
+import { useTaskStore } from "@/store/store";
 
 type TaskBlockControlProps = {
     setTaskData: (data: ITask[]) => void;
 }
 
 const TaskBlockControl: React.FC<TaskBlockControlProps> = ({ setTaskData }) => {
+    // States
+    const [isDoneTasks, setIsDoneTasks] = useState<boolean>(false) // Показываются только выполненные задачи
+
+    // Hooks
     const { getDoneTasks } = useShowDoneTasks()
 
+    // Store 
+    const updateState = useTaskStore((state) => state.changeUpdate)
+
     const handleGetDoneTasks = async () => {
+        const newVal = !isDoneTasks
+        setIsDoneTasks(newVal)
+
         const data = await getDoneTasks();
         console.log(data)
-        if (data) {
-            setTaskData(data);
+        if (data && newVal) {
+            setTaskData(data)
         } else {
-            console.error("Failed to fetch done tasks");
+            updateState();
         }
     }
 
     return (
         <div className="flex gap-2">
-            <Checkbox id='ads' action={handleGetDoneTasks}>Show done tasks</Checkbox>
+            <Checkbox id='ads' action={() => {
+                handleGetDoneTasks()
+
+            }}>Show done tasks</Checkbox>
         </div>
     )
 }
