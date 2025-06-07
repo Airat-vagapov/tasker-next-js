@@ -1,1 +1,1 @@
-const statuses:string[] = ['New', 'Backlog', 'In progress', 'Completed'];
+const statuses:string[] = ['New', 'In progress', 'Done'];
