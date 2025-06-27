@@ -10,3 +10,9 @@ export interface ITask {
     updated_at?: string;
     due_date?: string;
 }
+
+export  interface INewTaskData {
+    title: string,
+    description: string,
+    priority: string,
+}

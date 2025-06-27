@@ -16,9 +16,10 @@ import Droplist from "@/ui/Droplist/Droplist";
 import { ITask } from "@/types/task"
 import { priorityData } from '@/data/priority'
 
-import { useTaskStore } from "@/store/store"
 import Textarea from "@/ui/Textarea/Textarea";
 import Accordeon from "@/ui/Accordeon/Accordeon";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { taskApi } from "@/api/taskApi";
 
 type AddNewTaskFormValues = {
     title: string;
@@ -30,15 +31,35 @@ const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
     // const [fetchError, setFetchError] = useState<AxiosError | Error | null>(null);
+
     // TODO:
     // Добавить типизацию ошибки
     const [fetchError, setFetchError] = useState<any>(null);
-    const updateState = useTaskStore((state) => state.changeUpdate)
-    const addNewTask = async (task: ITask) => {
-        const res = await axios.post("http://localhost:8080/task", task)
-        return res
-    };
+    // const updateState = useTaskStore((state) => state.changeUpdate)
 
+    // API
+    // const addNewTask = async (task: ITask) => {
+    //     const res = await axios.post("http://localhost:8080/task", task)
+    //     return res
+    // }; 
+    const queryClient = useQueryClient()
+    const add = useMutation({
+        mutationFn: taskApi.addTask,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks'] })
+            setTaskAddError(false);
+            setTaskIsAdded(true);
+            addNewTaskForm.resetForm();
+        },
+        onError: (error) => {
+            console.log(error)
+            setFetchError(error);
+            setTaskIsAdded(false);
+            setTaskAddError(true);
+        }
+    })
+
+    // Formik settings
     const addNewTaskForm = useFormik<AddNewTaskFormValues>({
         initialValues: {
             title: '',
@@ -50,21 +71,35 @@ const AddNewTaskForm = () => {
             description: yup.string().required("Required"),
         }),
         onSubmit: async (values) => {
-            try {
-                const res = await addNewTask(values);
-                setTaskAddError(false);
-                setTaskIsAdded(true);
-                addNewTaskForm.resetForm();
-                updateState()
-                setFetchError(null);
-            } catch (err) {
-                if (axios.isAxiosError(err)) {
-                    setFetchError(err);
-                }
-                // console.error(err);
-                setTaskIsAdded(false);
-                setTaskAddError(true);
-            }
+            add.mutate(values)
+            console.log(add)
+            // if (add.isSuccess && !add.isError) {
+            //     setTaskAddError(false);
+            //     setTaskIsAdded(true);
+            //     addNewTaskForm.resetForm();
+            // }
+            // if (add.isError) {
+            //     console.log(add.error)
+            //     setFetchError(add.error);
+            //     setTaskIsAdded(false);
+            //     setTaskAddError(true);
+            // }
+
+            // try {
+            //     const res = await addNewTask(values);
+            //     setTaskAddError(false);
+            //     setTaskIsAdded(true);
+            //     addNewTaskForm.resetForm();
+            //     updateState()
+            //     setFetchError(null);
+            // } catch (err) {
+            //     if (axios.isAxiosError(err)) {
+            //         setFetchError(err);
+            //     }
+            //     // console.error(err);
+            //     setTaskIsAdded(false);
+            //     setTaskAddError(true);
+            // }
         },
     });
 
@@ -72,7 +107,7 @@ const AddNewTaskForm = () => {
 
     // Детали ошибки
     const errorMsg = fetchError?.message || "Unknown error";
-    const errorDetail = fetchError?.response.data.message.detail || 'No error data';
+    const errorDetail = fetchError?.response?.data.message.detail || 'No error data';
 
     return (
         <div className="relative">
@@ -132,12 +167,13 @@ const AddNewTaskForm = () => {
                     title="Ops! Error!"
                     text={
                         <>
+                            {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
                             <Accordeon
                                 title="Details"
                                 content={
                                     <>
-                                        {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
-                                        <br />
+                                        {/* {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg} */}
+                                        {/* <br /> */}
                                         {typeof errorDetail == "object" ? JSON.stringify(errorDetail) : errorDetail}
                                     </>
                                 }
