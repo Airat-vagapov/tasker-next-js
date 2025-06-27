@@ -107,7 +107,9 @@ const AddNewTaskForm = () => {
 
     // Детали ошибки
     const errorMsg = fetchError?.message || "Unknown error";
-    const errorDetail = fetchError?.response?.data.message.detail || 'No error data';
+    const errorCode = fetchError?.code || "Unknown code";
+    const errorDetail = fetchError?.stack || 'No error data';
+    // const errorDetail = fetchError?.response?.data.message.detail || 'No error data';
 
     return (
         <div className="relative">
@@ -167,13 +169,12 @@ const AddNewTaskForm = () => {
                     title="Ops! Error!"
                     text={
                         <>
+                            <span>{`${errorCode} `}</span>
                             {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
                             <Accordeon
                                 title="Details"
                                 content={
                                     <>
-                                        {/* {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg} */}
-                                        {/* <br /> */}
                                         {typeof errorDetail == "object" ? JSON.stringify(errorDetail) : errorDetail}
                                     </>
                                 }
