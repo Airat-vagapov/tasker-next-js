@@ -31,7 +31,7 @@ const TaskBlock = () => {
     const updateDeletedTask = useTaskStore((state) => state.updateDeletedTask)
 
     // API
-    const { data, isFetching, error } = useQuery({
+    const { data, isFetching, error, isSuccess } = useQuery({
         queryKey: ['tasks'],
         queryFn: taskApi.getAllTasks,
         staleTime: 1000 * 60 * 5
@@ -39,6 +39,10 @@ const TaskBlock = () => {
     useEffect(() => {
         if (data) { setTaskData(data) }
     }, [data])
+
+    useEffect(() => {
+        if (isSuccess) setErrorData(null)
+    }, [isSuccess])
 
     useEffect(() => {
         if (error) {
