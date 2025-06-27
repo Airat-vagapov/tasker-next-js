@@ -1,5 +1,6 @@
 import { ITask } from '@/types/task';
 import {create} from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 type TaskStore = {
     isNeedUpdate: boolean;
@@ -10,11 +11,17 @@ type TaskStore = {
     removeDeletedTask: () => void;
 }
 
-export const useTaskStore = create<TaskStore>((set) => ({
-    isNeedUpdate: false,
-    changeUpdate: () => set({isNeedUpdate: true}),
-    resetUpdate: () => set({isNeedUpdate: false}),
-    deletedTask: null,
-    updateDeletedTask: (task: ITask | null) => set({deletedTask: task}), 
-    removeDeletedTask: () => set({deletedTask: null}),
-}))
+export const useTaskStore = create<TaskStore>()(
+    devtools(
+        (set) => ({
+            // update
+            isNeedUpdate: false,
+            changeUpdate: () => set({isNeedUpdate: true}),
+            resetUpdate: () => set({isNeedUpdate: false}),
+            // deleted task
+            deletedTask: null,
+            updateDeletedTask: (task: ITask | null) => set({deletedTask: task}), 
+            removeDeletedTask: () => set({deletedTask: null}),
+        })
+    )
+);

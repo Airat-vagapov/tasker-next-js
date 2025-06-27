@@ -17,7 +17,7 @@ const TaskBlockControl: React.FC<TaskBlockControlProps> = ({ setTaskData }) => {
     const { getDoneTasks } = useShowDoneTasks()
 
     // Store 
-    const updateState = useTaskStore((state) => state.changeUpdate)
+    const updateState = useTaskStore((state) => state.changeUpdate) // Обновление данных в блоке задач
 
     const handleGetDoneTasks = async () => {
         const newVal = !isDoneTasks

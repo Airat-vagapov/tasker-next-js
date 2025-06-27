@@ -9,6 +9,9 @@ import { useTaskStore } from "@/store/store";
 import BottomNotification from "@/components/BottomNotification/BottomNotification";
 import TaskBlockControl from "@/components/TaskBlock/TaskBlockControl/TaskBlockControl";
 
+import { useQuery } from "@tanstack/react-query";
+import { taskApi } from '@/api/taskApi'
+
 interface ApiResponse {
     status: string;
     result: ITask[];
@@ -17,7 +20,7 @@ interface ApiResponse {
 const TaskBlock = () => {
     // States
     const [taskData, setTaskData] = useState<ITask[]>([]);
-    const [error, setError] = useState<string | null>(null);
+    const [errorData, setErrorData] = useState<string | null>(null);
 
     // Stores
     const isNeedUpdate = useTaskStore((state) => state.isNeedUpdate)
@@ -27,29 +30,45 @@ const TaskBlock = () => {
     const removeDeletedTask = useTaskStore((state) => state.removeDeletedTask)
     const updateDeletedTask = useTaskStore((state) => state.updateDeletedTask)
 
+    // API
+    const { data, isFetching, error } = useQuery({
+        queryKey: ['tasks'],
+        queryFn: taskApi.getAllTasks,
+        staleTime: 1000 * 60 * 5
+    })
+    useEffect(() => {
+        if (data) { setTaskData(data) }
+    }, [data])
 
-    const getTasks = async () => {
-        await axios
-            .get<ApiResponse>("http://localhost:8080/tasks")
-            .then((response) => {
-                setTaskData(response.data.result);
-            })
-            .catch((error) => {
-                if (error) {
-                    console.error(error.message);
-                    setError(error.message)
-                }
-            });
-    };
+    useEffect(() => {
+        if (error) {
+            setErrorData(error.message)
+            console.log(error)
+        }
+    }, [error])
+
+    // const getTasks = async () => {
+    //     await axios
+    //         .get<ApiResponse>("http://localhost:8080/tasks")
+    //         .then((response) => {
+    //             setTaskData(response.data.result);
+    //         })
+    //         .catch((error) => {
+    //             if (error) {
+    //                 console.error(error.message);
+    //                 setError(error.message)
+    //             }
+    //         });
+    // };
 
     // Effects 
-    useEffect(() => {
-        getTasks();
-    }, [])
+    // useEffect(() => {
+    //     getTasks();
+    // }, [])
 
     useEffect(() => {
         if (isNeedUpdate) {
-            getTasks();
+            // getTasks();
             resetUpdate();
         }
     }, [isNeedUpdate])
@@ -78,7 +97,7 @@ const TaskBlock = () => {
                     ))}
             </div>
 
-            {error && <ErrorBottom errorText={error} />}
+            {errorData && <ErrorBottom errorText={errorData} />}
 
             <BottomNotification
                 content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
