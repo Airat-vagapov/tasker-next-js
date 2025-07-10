@@ -13,10 +13,18 @@ export const taskApi = {
         return data.result
     },                                  
 
+    getDoneTasks: async () => {
+        const {data} = await axios
+        .get<ApiResponse>("http://localhost:8080/tasks/status/3")
+        return data.result
+    },
+    
     addTask: async (task: INewTaskData) => {
         console.log(task)
         const res = await axios.post("http://localhost:8080/task", task)
         return res
     }
+
+
 
 }
