@@ -11,6 +11,7 @@ import TaskBlockControl from "@/components/TaskBlock/TaskBlockControl/TaskBlockC
 
 import { useQuery } from "@tanstack/react-query";
 import { taskApi } from '@/api/taskApi'
+import Preloader from "@/ui/Preloader/Preloader";
 
 interface ApiResponse {
     status: string;
@@ -84,35 +85,40 @@ const TaskBlock = () => {
         return () => clearTimeout(closeNotification);
     }, [isTaskDeleted])
 
+    console.log(isFetching)
     return (
-        <div className="flex flex-col gap-5">
-            <TaskBlockControl setTaskData={setTaskData} />
-            <div className="flex flex-col gap-8">
-                {taskData &&
-                    taskData.map((item: ITask) => (
-                        <Task
-                            key={item.id}
-                            task={item}
-                            taskDeleteHandler={() => {
-                                setIsTaskDeleted(true)
-                                updateDeletedTask(item)
-                            }}
-                        />
-                    ))}
+        <>
+            {isFetching && <Preloader></Preloader>}
+
+            <div className="flex flex-col gap-5">
+                <TaskBlockControl setTaskData={setTaskData} />
+                <div className="flex flex-col gap-8">
+                    {taskData &&
+                        taskData.map((item: ITask) => (
+                            <Task
+                                key={item.id}
+                                task={item}
+                                taskDeleteHandler={() => {
+                                    setIsTaskDeleted(true)
+                                    updateDeletedTask(item)
+                                }}
+                            />
+                        ))}
+                </div>
+
+                {errorData && <ErrorBottom errorText={errorData} />}
+
+                <BottomNotification
+                    content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
+                    showStatus={isTaskDeleted}
+                    handleClose={() => {
+                        setIsTaskDeleted(false)
+                        removeDeletedTask()
+                    }}
+                    showButton={false}
+                />
             </div>
-
-            {errorData && <ErrorBottom errorText={errorData} />}
-
-            <BottomNotification
-                content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
-                showStatus={isTaskDeleted}
-                handleClose={() => {
-                    setIsTaskDeleted(false)
-                    removeDeletedTask()
-                }}
-                showButton={false}
-            />
-        </div>
+        </>
     );
 };
 

@@ -64,7 +64,7 @@ const AddNewTaskForm = () => {
         initialValues: {
             title: '',
             description: '',
-            priority: '',
+            priority: 'Medium',
         },
         validationSchema: yup.object({
             title: yup.string().required("Required"),

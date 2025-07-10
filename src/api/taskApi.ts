@@ -11,7 +11,7 @@ export const taskApi = {
         const {data} = await axios
             .get<ApiResponse>("http://localhost:8080/tasks")
         return data.result
-    },
+    },                                  
 
     addTask: async (task: INewTaskData) => {
         console.log(task)
