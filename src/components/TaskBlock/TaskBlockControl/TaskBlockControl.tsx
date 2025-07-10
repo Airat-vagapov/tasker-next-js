@@ -5,11 +5,7 @@ import useShowDoneTasks from "@/hooks/useShowDoneTasks";
 import Checkbox from "@/ui/Checkbox/Checkbox"
 import { useTaskStore } from "@/store/store";
 
-type TaskBlockControlProps = {
-    setTaskData: (data: ITask[]) => void;
-}
-
-const TaskBlockControl: React.FC<TaskBlockControlProps> = ({ setTaskData }) => {
+const TaskBlockControl = () => {
     // States
     const [isDoneTasks, setIsDoneTasks] = useState<boolean>(false) // Показываются только выполненные задачи
 
@@ -25,9 +21,9 @@ const TaskBlockControl: React.FC<TaskBlockControlProps> = ({ setTaskData }) => {
 
         const data = await getDoneTasks();
         if (data && newVal) {
-            setTaskData(data)
+            // setTaskData(data)
         } else {
-            updateState();
+            // updateState();
         }
     }
 

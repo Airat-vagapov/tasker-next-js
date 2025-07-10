@@ -19,13 +19,7 @@ interface ApiResponse {
 }
 
 const TaskBlock = () => {
-    // States
-    const [taskData, setTaskData] = useState<ITask[]>([]);
-    const [errorData, setErrorData] = useState<string | null>(null);
-
     // Stores
-    const isNeedUpdate = useTaskStore((state) => state.isNeedUpdate)
-    const resetUpdate = useTaskStore((state) => state.resetUpdate)
     const [isTaskDeleted, setIsTaskDeleted] = useState<boolean>(false)
     const deletedTask = useTaskStore((state) => state.deletedTask)
     const removeDeletedTask = useTaskStore((state) => state.removeDeletedTask)
@@ -37,46 +31,6 @@ const TaskBlock = () => {
         queryFn: taskApi.getAllTasks,
         staleTime: 1000 * 60 * 5
     })
-    useEffect(() => {
-        if (data) { setTaskData(data) }
-    }, [data])
-
-    useEffect(() => {
-        if (isSuccess) setErrorData(null)
-    }, [isSuccess])
-
-    useEffect(() => {
-        if (error) {
-            setErrorData(error.message)
-            console.log(error)
-        }
-    }, [error])
-
-    // const getTasks = async () => {
-    //     await axios
-    //         .get<ApiResponse>("http://localhost:8080/tasks")
-    //         .then((response) => {
-    //             setTaskData(response.data.result);
-    //         })
-    //         .catch((error) => {
-    //             if (error) {
-    //                 console.error(error.message);
-    //                 setError(error.message)
-    //             }
-    //         });
-    // };
-
-    // Effects 
-    // useEffect(() => {
-    //     getTasks();
-    // }, [])
-
-    useEffect(() => {
-        if (isNeedUpdate) {
-            // getTasks();
-            resetUpdate();
-        }
-    }, [isNeedUpdate])
 
     useEffect(() => {
         const closeNotification = setTimeout(() => {
@@ -85,16 +39,15 @@ const TaskBlock = () => {
         return () => clearTimeout(closeNotification);
     }, [isTaskDeleted])
 
-    console.log(isFetching)
     return (
         <>
             {isFetching && <Preloader></Preloader>}
 
             <div className="flex flex-col gap-5">
-                <TaskBlockControl setTaskData={setTaskData} />
+                <TaskBlockControl />
                 <div className="flex flex-col gap-8">
-                    {taskData &&
-                        taskData.map((item: ITask) => (
+                    {data &&
+                        data.map((item: ITask) => (
                             <Task
                                 key={item.id}
                                 task={item}
@@ -106,7 +59,7 @@ const TaskBlock = () => {
                         ))}
                 </div>
 
-                {errorData && <ErrorBottom errorText={errorData} />}
+                {error && <ErrorBottom errorText={error?.message || 'Something went wrong'} />}
 
                 <BottomNotification
                     content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
