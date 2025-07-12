@@ -26,7 +26,10 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ menuData }) => {
                                 return (
                                     <li key={index} className="flex gap-2 px-3 cursor-pointer 
                                         hover:text-blue transition-all duration-300"
-                                        onClick={item.action}
+                                        onClick={(event) => {
+                                            event.stopPropagation();
+                                            item.action?.(item.id); // предполагается, что item.id - это нужный аргумент
+                                        }}
                                     >
                                         <Icon {...item.icon}></Icon>
                                         {item.name}

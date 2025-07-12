@@ -37,8 +37,6 @@ const TaskBlock = () => {
         staleTime: 1000 * 60 * 5
     })
 
-    console.log(tasksActive)
-
     const errorData = activeTasksFetchError || doneTasksFetchError || null
 
 

@@ -26,11 +26,15 @@ export const taskApi = {
     },
     
     addTask: async (task: INewTaskData) => {
-        console.log(task)
+        // console.log(task)
         const res = await axios.post("http://localhost:8080/task", task)
         return res
+    },
+
+    deleteTask: async (id:number) => {
+        console.log(id)
+        const res = await axios.delete(`http://localhost:8080/task/${id}`, {"method" : 'DELETE'})
+        return res
     }
-
-
 
 }

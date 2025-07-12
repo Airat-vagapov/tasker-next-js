@@ -13,5 +13,5 @@ export interface IContextMenuData {
     name: string;
     icon: IconProps;
     // action?: (func: ((b:boolean)=>void)) => Promise<void>;
-    action?: ()=>void;
+    action?: (id: number)=>void;
 }
