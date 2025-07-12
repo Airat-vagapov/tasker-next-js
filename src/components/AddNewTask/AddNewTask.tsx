@@ -8,7 +8,6 @@ import { useState } from "react";
 const AddNewTask = () => {
     // States
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-    // const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     return (
         <>
             <Button

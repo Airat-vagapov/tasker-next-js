@@ -4,7 +4,7 @@ import Icon from "@/ui/Icon/Icon";
 import { useState } from 'react';
 
 type BottomNotificationProps = {
-    showStatus: boolean;
+    showStatus?: boolean;
     content: {
         title: string
         text: string
