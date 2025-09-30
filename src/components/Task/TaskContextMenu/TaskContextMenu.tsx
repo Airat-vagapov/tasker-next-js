@@ -9,17 +9,12 @@ type TaskContextMenuProps = {
 
 const TaskContextMenu: React.FC<TaskContextMenuProps> = ({ id, deleteHandlerOuter }) => {
     const { deleteHandler } = useDeleteTask()
-    // const handleDelete = () => {
-
-    //     deleteTask(id, deleteHandler)
-    // }
 
     const menuData: IContextMenuData[] = [
         {
             name: 'Delete',
             icon: { name: 'delete' },
             action: () => deleteHandler(id),
-            // taskId: id
         }
     ]
     return (
