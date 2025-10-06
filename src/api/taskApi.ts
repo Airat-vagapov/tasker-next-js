@@ -79,7 +79,7 @@ export const taskApi = {
         
     },
 
-    getTask: async (id: number) => {
+    getTaskById: async (id: string) => {
         try {
             const res = await axios.get(`${BASE_URL}/task/${id}`)
             return res    
