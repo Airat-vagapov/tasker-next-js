@@ -27,7 +27,5 @@ const TaskStatusChangeButton: React.FC<TaskStatusChangeButtonProps> = ({ task })
             <Button onClick={taskStatusChange} text={'Status change'}></Button>
         </>
     )
-
 }
-
 export default TaskStatusChangeButton;

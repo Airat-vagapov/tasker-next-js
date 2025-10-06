@@ -80,7 +80,7 @@ export const taskApi = {
 
     getTaskById: async (id: string) => {
         try {
-            const res = await axios.get(`${BASE_URL}/task/${id}`)
+            const res = await axios.get(`${BASE_URL}/ta2sk/${id}`)
             return res    
         } catch (error) {
             handleApiError(error)
@@ -92,7 +92,7 @@ export const taskApi = {
 const handleApiError = (error: any) => {
     console.log(error)
     if (error.response?.status === 404) {
-                throw new Error("Задача не найдена (404)");
+                throw new Error("Ошибка запроса (404)");
             } else if (error.response?.status >= 500) {
                 throw new Error("500 - Ошибка сервера. Попробуйте позже.");
             } else {

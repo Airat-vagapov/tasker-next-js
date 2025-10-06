@@ -4,6 +4,7 @@ import { useGetTask } from "@/hooks/useGetTask";
 import TaskDetailHeader from "@/components/TaskDetail/TaskDetailHeader/TaskDetailHeader";
 import ContentBlock from "@/ui/ContentBlock/ContentBlock";
 import TaskDetalInfo from "./TaskDetalInfo/TaskDetalInfo";
+import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
 
 
 
@@ -12,7 +13,7 @@ type TaskDetailProps = {
 }
 
 const TaskDetail: React.FC<TaskDetailProps> = (id) => {
-    const { data } = useGetTask(id.id)
+    const { data, error, isError } = useGetTask(id.id)
     const task = data?.data.result
     return (
         <>
@@ -36,6 +37,10 @@ const TaskDetail: React.FC<TaskDetailProps> = (id) => {
                     </div>
                 </div>
             }
+            {isError &&
+                <>
+                    <ErrorBottom errorText={(error as Error).message} />
+                </>}
 
         </>
     )
