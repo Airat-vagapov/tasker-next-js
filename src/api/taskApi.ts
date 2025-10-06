@@ -10,41 +10,93 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const taskApi = {
     getAllTasks: async () => {
-        const {data} = await axios
-            .get<ApiResponse>("http://localhost:8080/tasks")
-        return data.result
+        try {
+            const {data} = await axios.get<ApiResponse>(`${BASE_URL}/tasks`)
+            return data.result
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
     },   
     
     getActiveTasks: async () => {
-        const {data} = await axios
-        .get<ApiResponse>("http://localhost:8080/tasks/status?id=1,2")
-        return data.result
+        try {
+            const {data} = await axios
+                .get<ApiResponse>(`${BASE_URL}/tasks/status?id=1,2`)
+            return data.result
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
+        
     },
 
     getDoneTasks: async () => {
-        const {data} = await axios
-        .get<ApiResponse>("http://localhost:8080/tasks/status?id=3")
-        return data.result
+        try {
+            const {data} = await axios
+            .get<ApiResponse>(`${BASE_URL}/tasks/status?id=3`)
+            return data.result    
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
+        
     },
     
     addTask: async (task: INewTaskData) => {
-        // console.log(task)
-        const res = await axios.post("http://localhost:8080/task", task)
-        return res
+        try {
+            const res = await axios.post(`${BASE_URL}/task`, task)
+            return res
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
     },
 
     deleteTask: async (id:number) => {
+
         console.log(id)
-        const res = await axios.delete(`http://localhost:8080/task/${id}`, {"method" : 'DELETE'})
-        return res
+        try {
+            const res = await axios.delete(`${BASE_URL}/task/${id}`, {"method" : 'DELETE'})
+            return res    
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
+        
     },
 
     // changeTaskStatus: async (id:number, task: ITask) => {
     changeTaskStatus: async (task: ITask) => {
         console.log(`перед запросом - ${task}`)
-        const res = await axios.post(`http://localhost:8080/task/${task.id}`, {task})
-        console.log(`тут - ${res}`)
-        return res
-    }
+        try {
+            const res = await axios.post(`${BASE_URL}/task/${task.id}`, {task})
+            return res    
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
+        
+    },
 
+    getTask: async (id: number) => {
+        try {
+            const res = await axios.get(`${BASE_URL}/task/${id}`)
+            return res    
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
+    }
+}
+
+const handleApiError = (error: any) => {
+    console.log(error)
+    if (error.response?.status === 404) {
+                throw new Error("Задача не найдена (404)");
+            } else if (error.response?.status >= 500) {
+                throw new Error("500 - Ошибка сервера. Попробуйте позже.");
+            } else {
+                throw new Error(`Ошибка при загрузке задачи: ${error.response?.statusText} (${error.response?.status})`);
+            }
 }
