@@ -5,6 +5,7 @@ import { ITask } from "@/types/task";
 import { useRouter } from 'next/navigation';
 import { taskApi } from "@/api/taskApi";
 import useChangeTasStatus from "@/hooks/useChangeTasStatus";
+import { useQueryClient } from "@tanstack/react-query";
 
 type TaskStatusChangeButtonProps = {
     task: ITask;
@@ -12,16 +13,14 @@ type TaskStatusChangeButtonProps = {
 
 const TaskStatusChangeButton: React.FC<TaskStatusChangeButtonProps> = ({ task }) => {
     // Hooks
-    const { changeTaskStatusHandler } = useChangeTasStatus()
+    const { changeTaskStatusHandler } = useChangeTasStatus(task.id)
     // Router
-    const router = useRouter();
-
-    const taskStatusChange = async () => {
-        task.status_id = (task.status_id ?? 0) + 1
-        await changeTaskStatusHandler(task.id, task)
-        // await taskApi.changeTaskStatus(task.id)
-        // const res = await axios.post(`http://localhost:8080/task/${task.id}`, { task })
-        router.refresh()
+    // API
+    const queryClient = useQueryClient()
+    const taskStatusChange = () => {
+        const updatedTask = { ...task, status_id: (task.status_id ?? 0) + 1 }
+        changeTaskStatusHandler(updatedTask)
+        // queryClient.setQueryData(['task', task.id], updatedTask);
     }
     return (
         <>

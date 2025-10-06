@@ -68,15 +68,14 @@ export const taskApi = {
 
     // changeTaskStatus: async (id:number, task: ITask) => {
     changeTaskStatus: async (task: ITask) => {
-        console.log(`перед запросом - ${task}`)
+        console.log(`перед запросом`, task)
         try {
             const res = await axios.post(`${BASE_URL}/task/${task.id}`, {task})
-            return res    
+            return res.data    
         } catch (error) {
             handleApiError(error)
             throw error
         }
-        
     },
 
     getTaskById: async (id: string) => {
