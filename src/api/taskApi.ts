@@ -80,7 +80,7 @@ export const taskApi = {
 
     getTaskById: async (id: string) => {
         try {
-            const res = await axios.get(`${BASE_URL}/ta2sk/${id}`)
+            const res = await axios.get(`${BASE_URL}/task/${id}`)
             return res    
         } catch (error) {
             handleApiError(error)

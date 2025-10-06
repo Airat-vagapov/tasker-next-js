@@ -13,18 +13,10 @@ import TaskList from "./TaskList/TaskList";
 
 const TaskBlock = () => {
     // Stores
-    // const [isTaskDeleted, setIsTaskDeleted] = useState<boolean>(false)
     const deletedTask = useTaskStore((state) => state.deletedTask)
     const removeDeletedTask = useTaskStore((state) => state.removeDeletedTask)
-    // const updateDeletedTask = useTaskStore((state) => state.updateDeletedTask)
 
     // API
-    // const { data: taskData, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
-    //     queryKey: ['tasks'],
-    //     queryFn: taskApi.getAllTasks,
-    //     staleTime: 1000 * 60 * 5
-    // })
-
     const { data: tasksDone, isFetching: isFetchingDoneTasks, error: doneTasksFetchError } = useQuery({
         queryKey: ['tasksDone'],
         queryFn: taskApi.getDoneTasks,
@@ -39,29 +31,18 @@ const TaskBlock = () => {
 
     const errorData = activeTasksFetchError || doneTasksFetchError || null
 
-
-    // useEffect(() => {
-    //     const closeNotification = setTimeout(() => {
-    // setIsTaskDeleted(false)
-    // }, 1500)
-    // return () => clearTimeout(closeNotification);
-    // }, [isTaskDeleted])
-
     return (
         <>
             {(isFetchingActiveTasks || isFetchingDoneTasks) && <Preloader></Preloader>}
 
             <div className="flex flex-col gap-5">
-                {/* <TaskBlockControl /> */}
                 {tasksActive && <TaskList title={'Active tasks'} data={tasksActive} />}
                 {tasksDone && <TaskList title={'Done tasks'} data={tasksDone} />}
                 {errorData && <ErrorBottom errorText={errorData?.message || 'Something went wrong'} />}
 
                 <BottomNotification
                     content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
-                    // showStatus={isTaskDeleted}
                     handleClose={() => {
-                        // setIsTaskDeleted(false)
                         removeDeletedTask()
                     }}
                     showButton={false}

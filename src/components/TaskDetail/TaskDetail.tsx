@@ -5,6 +5,10 @@ import TaskDetailHeader from "@/components/TaskDetail/TaskDetailHeader/TaskDetai
 import ContentBlock from "@/ui/ContentBlock/ContentBlock";
 import TaskDetalInfo from "./TaskDetalInfo/TaskDetalInfo";
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
+import Preloader from "@/ui/Preloader/Preloader";
+
+import { marked } from 'marked';
+import ReactMarkdown from 'react-markdown';
 
 
 
@@ -13,13 +17,12 @@ type TaskDetailProps = {
 }
 
 const TaskDetail: React.FC<TaskDetailProps> = (id) => {
-    const { data, error, isError } = useGetTask(id.id)
+    const { data, error, isError, isFetching } = useGetTask(id.id)
     const task = data?.data.result
     return (
         <>
-            <div>111</div>
+            {isFetching && <Preloader />}
             {task &&
-
                 <div className="flex flex-col gap-6">
                     <TaskDetailHeader task={task}>{`#${task.id} ${task.title}`}</TaskDetailHeader>
                     <div className="flex gap-10 items-stretch">
@@ -27,7 +30,10 @@ const TaskDetail: React.FC<TaskDetailProps> = (id) => {
                             <ContentBlock classes="h-full">
                                 <div className="flex flex-col gap-4">
                                     <p className="text-xl">Description</p>
-                                    <p>{task && task.description}</p>
+                                    <p>
+                                        {task && task.description && <ReactMarkdown>{task.description}</ReactMarkdown>}
+
+                                    </p>
                                 </div>
                             </ContentBlock>
                         </div>
