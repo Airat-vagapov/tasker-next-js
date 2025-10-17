@@ -18,7 +18,7 @@ import Accordeon from "@/ui/Accordeon/Accordeon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { taskApi } from "@/api/taskApi";
 
-import { generateText } from "@/api/aiApi";
+import { generateText, getModels } from "@/api/aiApi";
 
 type AddNewTaskFormValues = {
     title: string;
@@ -103,6 +103,13 @@ const AddNewTaskForm = () => {
                             setFieldValue('description', result)
                         }
                     }}></Button>
+
+                    <Button text={'get models'}
+                        onClick={async () => {
+                            const result = await getModels()
+                            console.log('Результат запроса', result)
+                        }}
+                    ></Button>
 
                     <Textarea
                         label="Description"

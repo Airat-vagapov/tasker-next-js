@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BASE_URL = process.env.AI_API_URL
+const BASE_URL = process.env.AI_API_URL2
 
 export async function POST  (req: NextRequest) {
     const body = await req.json()
