@@ -7,7 +7,6 @@ import TaskDetalInfo from "./TaskDetalInfo/TaskDetalInfo";
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
 import Preloader from "@/ui/Preloader/Preloader";
 
-import { marked } from 'marked';
 import ReactMarkdown from 'react-markdown';
 
 
@@ -31,7 +30,11 @@ const TaskDetail: React.FC<TaskDetailProps> = (id) => {
                                 <div className="flex flex-col gap-4">
                                     <p className="text-xl">Description</p>
                                     <p>
-                                        {task && task.description && <ReactMarkdown>{task.description}</ReactMarkdown>}
+                                        {task && task.description &&
+                                            <>
+                                                <ReactMarkdown>{task.description}</ReactMarkdown>
+                                            </>
+                                        }
 
                                     </p>
                                 </div>
