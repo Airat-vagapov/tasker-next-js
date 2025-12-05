@@ -72,13 +72,9 @@ const AddNewTaskForm = () => {
     const { errors, touched } = addNewTaskForm;
 
     // Детали ошибки
-    console.log('Fetch error', fetchError)
-    const errorMsg = fetchError?.message || "Unknown error";
-    const errorCode = fetchError?.response?.status || "Unknown code";
-    const errorDetail = fetchError?.stack || 'No error data';
-    const errorTextFromBackend = fetchError?.response?.data.message || 'No error data';
-    console.log('error response', fetchError?.response)
-    console.log('error form back', errorTextFromBackend)
+    const errorMsg = fetchError?.message || "";
+    const errorCode = fetchError?.response?.status || "";
+    const errorDetail = fetchError?.stack || '';
 
     return (
         <div className="relative">
@@ -148,8 +144,6 @@ const AddNewTaskForm = () => {
                         <>
                             <span>{`${errorCode} `}</span>
                             {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
-                            <br />
-                            <span>{`${errorTextFromBackend}`}</span>
                             <Accordeon
                                 title="Details"
                                 content={
