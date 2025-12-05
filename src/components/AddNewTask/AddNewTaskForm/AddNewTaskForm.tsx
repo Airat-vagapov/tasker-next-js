@@ -72,10 +72,13 @@ const AddNewTaskForm = () => {
     const { errors, touched } = addNewTaskForm;
 
     // Детали ошибки
+    console.log('Fetch error', fetchError)
     const errorMsg = fetchError?.message || "Unknown error";
-    const errorCode = fetchError?.code || "Unknown code";
+    const errorCode = fetchError?.response?.status || "Unknown code";
     const errorDetail = fetchError?.stack || 'No error data';
-    // const errorDetail = fetchError?.response?.data.message.detail || 'No error data';
+    const errorTextFromBackend = fetchError?.response?.data.message || 'No error data';
+    console.log('error response', fetchError?.response)
+    console.log('error form back', errorTextFromBackend)
 
     return (
         <div className="relative">
@@ -95,21 +98,14 @@ const AddNewTaskForm = () => {
                         value={addNewTaskForm.values.title}
                         errorText={errors.title}
                     />
-                    <Button text={"Generate task description"} onClick={async () => {
+                    {/* <Button text={"Generate task description"} onClick={async () => {
                         if (addNewTaskForm.values.title) {
                             const result = await generateText(addNewTaskForm.values.title)
                             console.log('Результат генерации', result)
                             const { setFieldValue } = addNewTaskForm;
                             setFieldValue('description', result)
                         }
-                    }}></Button>
-
-                    <Button text={'get models'}
-                        onClick={async () => {
-                            const result = await getModels()
-                            console.log('Результат запроса', result)
-                        }}
-                    ></Button>
+                    }}></Button> */}
 
                     <Textarea
                         label="Description"
@@ -152,6 +148,8 @@ const AddNewTaskForm = () => {
                         <>
                             <span>{`${errorCode} `}</span>
                             {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
+                            <br />
+                            <span>{`${errorTextFromBackend}`}</span>
                             <Accordeon
                                 title="Details"
                                 content={

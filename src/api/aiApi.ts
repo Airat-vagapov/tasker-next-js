@@ -30,7 +30,6 @@ export const generateText = async (prompt: string) => {
    try {
       const response = await axios.post('/api/ai/generate2', {
             'prompt': `Сделай описание задачи по названию - ${prompt}`,
-            // "model": "gemini-2.5-flash",
             "temperature": 0.7,
             "max_output_tokens": 1000
         })

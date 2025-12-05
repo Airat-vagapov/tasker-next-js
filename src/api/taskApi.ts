@@ -96,6 +96,7 @@ const handleApiError = (error: any) => {
             } else if (error.response?.status >= 500) {
                 throw new Error("500 - Ошибка сервера. Попробуйте позже.");
             } else {
-                throw new Error(`Ошибка при загрузке задачи: ${error.response?.statusText} (${error.response?.status})`);
+                throw new Error(`Ошибка при загрузке данных: ${error.response?.statusText} (${error.response?.status}) -- ${error.response?.data.message}`);
+                // throw new Error(error);
             }
 }
