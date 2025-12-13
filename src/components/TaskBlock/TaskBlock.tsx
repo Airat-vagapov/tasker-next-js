@@ -1,10 +1,9 @@
 'use client'
-
 import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
 import { useTaskStore } from "@/store/store";
-import BottomNotification from "@/components/BottomNotification/BottomNotification";
-import TaskBlockControl from "@/components/TaskBlock/TaskBlockControl/TaskBlockControl";
+import BottomNotification from "@/components/BottomNotification/BottomNotification"
 
+import { useSearchParams } from 'next/navigation'
 import { useQuery } from "@tanstack/react-query";
 import { taskApi } from '@/api/taskApi'
 import Preloader from "@/ui/Preloader/Preloader";
@@ -16,28 +15,51 @@ const TaskBlock = () => {
     const deletedTask = useTaskStore((state) => state.deletedTask)
     const removeDeletedTask = useTaskStore((state) => state.removeDeletedTask)
 
+    // Get URL params
+    const searchParams = useSearchParams()
+    // const status = searchParams.get('status') ?? undefined
+    // const sortBy = searchParams.get('sortBy') ?? undefined
+    // const order = searchParams.get('order') ?? undefined
+    // const search = searchParams.get('search') ?? undefined
+
+    const params = {
+        status: searchParams.get('status') ?? undefined,
+        sortBy: searchParams.get('sortBy') ?? undefined,
+        order: searchParams.get('order') ?? undefined,
+        search: searchParams.get('search') ?? undefined
+    }
     // API
-    const { data: tasksDone, isFetching: isFetchingDoneTasks, error: doneTasksFetchError } = useQuery({
-        queryKey: ['tasksDone'],
-        queryFn: taskApi.getDoneTasks,
-        staleTime: 1000 * 60 * 5
+    const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
+        queryKey: ['allTasks', params],
+        queryFn: () => taskApi.getAllTasks(params)
     })
 
-    const { data: tasksActive, isFetching: isFetchingActiveTasks, error: activeTasksFetchError } = useQuery({
-        queryKey: ['tasksActive'],
-        queryFn: taskApi.getActiveTasks,
-        staleTime: 1000 * 60 * 5
-    })
+    // const { data: tasksDone, isFetching: isFetchingDoneTasks, error: doneTasksFetchError } = useQuery({
+    //     queryKey: ['tasksDone'],
+    //     queryFn: taskApi.getDoneTasks,
+    //     staleTime: 1000 * 60 * 5
+    // })
 
-    const errorData = activeTasksFetchError || doneTasksFetchError || null
+    // const { data: tasksActive, isFetching: isFetchingActiveTasks, error: activeTasksFetchError } = useQuery({
+    //     queryKey: ['tasksActive'],
+    //     queryFn: taskApi.getActiveTasks,
+    //     staleTime: 1000 * 60 * 5
+    // })
+
+    // const errorData = tasksFetchError || activeTasksFetchError || doneTasksFetchError || null
+    const errorData = tasksFetchError || null
+
+    const isShowPreloader = isFetchingTasks
 
     return (
         <>
-            {(isFetchingActiveTasks || isFetchingDoneTasks) && <Preloader></Preloader>}
+            {/* {(isFetchingActiveTasks || isFetchingDoneTasks || isFetchingTasks) && <Preloader></Preloader>} */}
+            {(isShowPreloader) && <Preloader></Preloader>}
 
             <div className="flex flex-col gap-5">
-                {tasksActive && <TaskList title={'Active tasks'} data={tasksActive} />}
-                {tasksDone && <TaskList title={'Done tasks'} data={tasksDone} />}
+                {tasks && <TaskList title={'All tasks'} data={tasks} />}
+                {/* {tasksActive && <TaskList title={'Active tasks'} data={tasksActive} />} */}
+                {/* {tasksDone && <TaskList title={'Done tasks'} data={tasksDone} />} */}
                 {errorData && <ErrorBottom errorText={errorData?.message || 'Something went wrong'} />}
 
                 <BottomNotification

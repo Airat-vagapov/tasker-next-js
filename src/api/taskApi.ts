@@ -1,4 +1,5 @@
 import { ITask, INewTaskData } from "@/types/task";
+import {getAllTasksParams} from '@/api/tasks.types'
 import axios from "axios";
 
 interface ApiResponse {
@@ -9,9 +10,9 @@ interface ApiResponse {
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const taskApi = {
-    getAllTasks: async () => {
+    getAllTasks: async ({status, sortBy, order = 'desc'}: getAllTasksParams) => {
         try {
-            const {data} = await axios.get<ApiResponse>(`${BASE_URL}/tasks`)
+            const {data} = await axios.get<ApiResponse>(`${BASE_URL}/tasks`, {params: {status, sortBy, order}})
             return data.result
         } catch (error) {
             handleApiError(error)
