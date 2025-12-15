@@ -5,6 +5,7 @@ type InputProps = {
     label?: string;
     id: string;
     name: string;
+    placeholder?: string,
     inptType: string;
     onChange: (e: ChangeEvent<any>) => void;
     onBlur: (e: FocusEvent<any, Element>) => void;
@@ -19,6 +20,7 @@ const Input: React.FC<InputProps> = ({
     label,
     id,
     name,
+    placeholder,
     inptType,
     onChange,
     onBlur,
@@ -48,6 +50,7 @@ const Input: React.FC<InputProps> = ({
                     `}
                     id={id}
                     name={name}
+                    placeholder={placeholder}
                     type={inptType}
                     onFocus={handleFocus}
                     onChange={onChange}

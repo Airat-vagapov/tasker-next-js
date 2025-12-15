@@ -71,6 +71,12 @@ textarea:focus {
     outline: none;
 }
 
+input:focus::placeholder,
+textarea:focus::placeholder {
+    opacity: 0;
+    transition: all .1s ease;
+}
+
 .logo {
     font-family: var(--font-oswald) sans-serif;
 }

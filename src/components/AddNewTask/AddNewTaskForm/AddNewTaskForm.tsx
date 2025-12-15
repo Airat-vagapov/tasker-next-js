@@ -36,11 +36,12 @@ const AddNewTaskForm = () => {
 
     // API
     const queryClient = useQueryClient()
-    const add = useMutation({
+    const addTask = useMutation({
         mutationFn: taskApi.addTask,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tasksDone'] })
-            queryClient.invalidateQueries({ queryKey: ['tasksActive'] })
+            queryClient.invalidateQueries({ queryKey: ['allTasks'] })
+            // queryClient.invalidateQueries({ queryKey: ['tasksDone'] })
+            // queryClient.invalidateQueries({ queryKey: ['tasksActive'] })
             setTaskAddError(false);
             setTaskIsAdded(true);
             addNewTaskForm.resetForm();
@@ -65,7 +66,7 @@ const AddNewTaskForm = () => {
             description: yup.string().required("Required"),
         }),
         onSubmit: async (values) => {
-            add.mutate(values)
+            addTask.mutate(values)
         },
     });
 

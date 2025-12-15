@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { taskApi } from '@/api/taskApi'
 import Preloader from "@/ui/Preloader/Preloader";
 import TaskList from "./TaskList/TaskList";
+import FilterBlock from "@/components/FilterBlock/FilterBlock";
 
 
 const TaskBlock = () => {
@@ -17,17 +18,13 @@ const TaskBlock = () => {
 
     // Get URL params
     const searchParams = useSearchParams()
-    // const status = searchParams.get('status') ?? undefined
-    // const sortBy = searchParams.get('sortBy') ?? undefined
-    // const order = searchParams.get('order') ?? undefined
-    // const search = searchParams.get('search') ?? undefined
-
     const params = {
         status: searchParams.get('status') ?? undefined,
         sortBy: searchParams.get('sortBy') ?? undefined,
         order: searchParams.get('order') ?? undefined,
         search: searchParams.get('search') ?? undefined
     }
+
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
         queryKey: ['allTasks', params],
@@ -57,6 +54,8 @@ const TaskBlock = () => {
             {(isShowPreloader) && <Preloader></Preloader>}
 
             <div className="flex flex-col gap-5">
+                <FilterBlock />
+
                 {tasks && <TaskList title={'All tasks'} data={tasks} />}
                 {/* {tasksActive && <TaskList title={'Active tasks'} data={tasksActive} />} */}
                 {/* {tasksDone && <TaskList title={'Done tasks'} data={tasksDone} />} */}
