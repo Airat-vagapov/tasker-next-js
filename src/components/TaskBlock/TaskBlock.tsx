@@ -19,11 +19,14 @@ const TaskBlock = () => {
     // Get URL params
     const searchParams = useSearchParams()
     const params = {
+        search_id: searchParams.get('search_id') ?? undefined,
         status: searchParams.get('status') ?? undefined,
         sortBy: searchParams.get('sortBy') ?? undefined,
         order: searchParams.get('order') ?? undefined,
         search: searchParams.get('search') ?? undefined
     }
+
+    console.log(params)
 
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({

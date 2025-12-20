@@ -1,7 +1,29 @@
+'use client'
+
+import Button from "@/ui/Button/Button";
 import Input from "@/ui/Input/Input";
 import { useFormik } from "formik";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ChangeEvent, useEffect } from "react";
 
 const FilterBlock = () => {
+    const router = useRouter()
+
+    // Effects
+    const searchParams = useSearchParams();
+    // Очистка формы, когда нет параметров в URL
+    useEffect(() => {
+        if (!searchParams.toString().length) {
+            filterForm.resetForm()
+        } else {
+            const params = searchParams.toString().split('&')
+            console.log('URL params', params)
+        }
+
+
+    }, [searchParams.toString()])
+
+
     // Fromik settings
     const filterForm = useFormik({
         initialValues: {
@@ -12,10 +34,19 @@ const FilterBlock = () => {
             sortBy: '',
             order: '',
         },
-        onSubmit: async () => {
-
+        onSubmit: async (values) => {
+            const searchParams = new URLSearchParams();
+            searchParams.set('search_id', values.id)
+            router.push(`/?${searchParams}`)
         }
     })
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        filterForm.handleChange(e)
+        filterForm.submitForm()
+        // const searchTimeout = setTimeout(() => filterForm.submitForm(), 200)
+        // clearTimeout(searchTimeout)
+    }
 
     return (
         <>
@@ -23,14 +54,16 @@ const FilterBlock = () => {
                 <form className="grid grid-cols-4 gap-8">
                     <Input
                         label="Task ID"
-                        id="text"
-                        name="task_id"
+                        id="id"
+                        name="id"
                         placeholder="Enter task ID"
                         inptType="text"
-                        onChange={filterForm.handleChange}
+                        onChange={handleChange}
                         onBlur={filterForm.handleBlur}
-                        value={filterForm.values.title}
+                        value={filterForm.values.id}
                     ></Input>
+
+                    {/* <Button btnType="submit" text={"Add new task"} /> */}
                 </form>
             </div>
         </>
