@@ -9,6 +9,7 @@ type DroplistProps<T> = {
     id: string;
     name: string;
     label: string;
+    placeholder?: string;
     onChange: (e: ChangeEvent<any>) => void;
     onBlur: (e: FocusEvent<any, Element>) => void;
     value: string | number;
@@ -20,6 +21,7 @@ const Droplist = <T,>({
     id,
     name,
     label,
+    placeholder,
     onChange,
     onBlur,
     value,
@@ -50,6 +52,7 @@ const Droplist = <T,>({
                     name={name}
                     label={label}
                     inptType="text"
+                    placeholder={placeholder}
                     onChange={onChange}
                     onBlur={onBlur}
                     value={value}
@@ -59,7 +62,6 @@ const Droplist = <T,>({
                 />
             </div>
 
-            {/* {listIsOpen && */}
             <div className={`absolute w-[100%] top-[calc(100%+8px)] duration-300 transition-all
                 ${listIsOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-90 opacity-0 pointer-events-none'}
                 `}>
@@ -83,7 +85,6 @@ const Droplist = <T,>({
                     })}
                 </ul>
             </div>
-            {/* } */}
 
         </div>
 

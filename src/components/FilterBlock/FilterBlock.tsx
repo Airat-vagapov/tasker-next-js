@@ -2,9 +2,13 @@
 
 import Button from "@/ui/Button/Button";
 import Input from "@/ui/Input/Input";
+import Droplist from "@/ui/Droplist/Droplist";
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect } from "react";
+
+// Data
+import { priorityData } from '@/data/priority'
 
 const FilterBlock = () => {
     const router = useRouter()
@@ -34,8 +38,8 @@ const FilterBlock = () => {
         params.forEach((val, _) => {
             const paramName = val.split('=')[0]
             const paramValue = val.split('=')[1]
-            
-            if (paramValue.length) {
+
+            if (paramValue && paramValue.length) {
                 filterForm.setFieldValue(paramName, paramValue)
             }
 
@@ -66,7 +70,7 @@ const FilterBlock = () => {
         },
         onSubmit: async (values) => {
             const searchParams = new URLSearchParams();
-            searchParams.set('search_id', values.search_id)
+            // searchParams.set('search_id', values.search_id)
             searchParams.set('search', values.search)
             router.push(`/?${searchParams}`)
         }
@@ -74,7 +78,7 @@ const FilterBlock = () => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         filterForm.handleChange(e)
-        filterForm.submitForm()
+        // filterForm.submitForm()
         // const searchTimeout = setTimeout(() => filterForm.submitForm(), 200)
         // clearTimeout(searchTimeout)
     }
@@ -103,6 +107,19 @@ const FilterBlock = () => {
                         onBlur={filterForm.handleBlur}
                         value={filterForm.values.search}
                     ></Input>
+                    <Droplist
+                        id="priority"
+                        name="priority"
+                        label="Priority"
+                        placeholder="Select priotity"
+                        onChange={filterForm.handleChange}
+                        onBlur={filterForm.handleBlur}
+                        value={filterForm.values.priority}
+                        form={filterForm}
+                        options={priorityData}
+                    />
+
+                    <Button text={"Apply"} btnType='submit'></Button>
 
                     {/* <Button btnType="submit" text={"Add new task"} /> */}
                 </form>
