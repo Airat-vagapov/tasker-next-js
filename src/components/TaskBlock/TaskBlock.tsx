@@ -24,6 +24,7 @@ const TaskBlock = () => {
         status: searchParams.get('status') ?? undefined,
         sortBy: searchParams.get('sortBy') ?? undefined,
         order: searchParams.get('order') ?? undefined,
+        priority: searchParams.get('priority') ?? undefined,
     }
 
     console.log('params', params)

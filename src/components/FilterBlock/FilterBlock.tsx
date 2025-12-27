@@ -17,7 +17,7 @@ const FilterBlock = () => {
     const searchParams = useSearchParams();
     // Очистка формы, когда нет параметров в URL
     useEffect(() => {
-        
+
     }, [searchParams.toString()])
 
 
@@ -44,6 +44,7 @@ const FilterBlock = () => {
                         order: '',
                     }}
                     onSubmit={(values) => {
+                        console.log('form values', values)
                         const searchParams = new URLSearchParams();
                         Object.entries(values).forEach(([key, value]) => {
                             if (value) searchParams.set(key, String(value).toLowerCase())
@@ -51,7 +52,7 @@ const FilterBlock = () => {
                         router.push(`/?${searchParams}`)
                     }}
                 >
-                    {(formik) => (
+                    {(filterForm) => (
                         <Form className="grid grid-cols-4 gap-8">
                             <Input
                                 label="Task ID"
@@ -59,9 +60,9 @@ const FilterBlock = () => {
                                 name="search_id"
                                 placeholder="Enter task ID"
                                 inptType="text"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.search_id}
+                                onChange={filterForm.handleChange}
+                                onBlur={filterForm.handleBlur}
+                                value={filterForm.values.search_id}
                             ></Input>
                             <Input
                                 label="Search"
@@ -69,19 +70,19 @@ const FilterBlock = () => {
                                 name="search"
                                 placeholder="Enter search query"
                                 inptType="text"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.search}
+                                onChange={filterForm.handleChange}
+                                onBlur={filterForm.handleBlur}
+                                value={filterForm.values.search}
                             ></Input>
                             <Droplist
                                 id="priority"
                                 name="priority"
                                 label="Priority"
                                 placeholder="Select priotity"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.priority}
-                                form={formik}
+                                onChange={filterForm.handleChange}
+                                onBlur={filterForm.handleBlur}
+                                value={filterForm.values.priority}
+                                form={filterForm}
                                 options={priorityData}
                             />
 
