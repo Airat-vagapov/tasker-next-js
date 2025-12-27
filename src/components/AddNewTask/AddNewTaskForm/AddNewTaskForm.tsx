@@ -55,6 +55,7 @@ const AddNewTaskForm = () => {
     })
 
     // Formik settings
+    // TO DO: перевести на <Form> и убрать useFormik
     const addNewTaskForm = useFormik<AddNewTaskFormValues>({
         initialValues: {
             title: '',

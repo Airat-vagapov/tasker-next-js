@@ -1,6 +1,6 @@
 'use client'
-import { FormikProps } from 'formik';
-import { ChangeEvent, FocusEvent, useEffect, useRef, useState } from "react";
+import { FormikProps, useField } from 'formik';
+import { ChangeEvent, FocusEvent, useEffect, useRef, useState, KeyboardEvent } from "react";
 
 import Input from '@/ui/Input/Input';
 import { ISelectData } from '@/types/global';
@@ -28,8 +28,15 @@ const Droplist = <T,>({
     options,
     form,
 }: DroplistProps<T>) => {
+    const [field, meta, helpers] = useField(name);
     const [listIsOpen, setListIsOpen] = useState<boolean>(false)
+    const [focusedIndex, setFocusedIndex] = useState(-1);
     const selectRef = useRef<HTMLDivElement>(null)
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    console.log('field', field)
+    console.log('meta', meta)
+    console.log('helpers', helpers)
 
     // Закрытие при клике вне селекта
     useEffect(() => {
@@ -40,9 +47,44 @@ const Droplist = <T,>({
         }
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            document.addEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         }
     }, [])
+
+
+    const handleSelect = (option: ISelectData) => {
+        helpers.setValue(option.title);
+        helpers.setTouched(true); // ✅ Важно для валидации
+        setListIsOpen(false);
+        buttonRef.current?.focus();
+    };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                setListIsOpen(true);
+                setFocusedIndex(prev => Math.min(prev + 1, options.length - 1));
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                setFocusedIndex(prev => Math.max(prev - 1, 0));
+                break;
+            case 'Enter':
+            case ' ':
+                e.preventDefault();
+                if (focusedIndex >= 0) {
+                    handleSelect(options[focusedIndex]);
+                } else {
+                    setListIsOpen(!listIsOpen);
+                }
+                break;
+            case 'Escape':
+                setListIsOpen(false);
+                break;
+        }
+    };
+
 
     return (
         <div className="relative" ref={selectRef}>
@@ -58,6 +100,7 @@ const Droplist = <T,>({
                     value={value}
                     disable={true}
                     arrow={true}
+                    onKeyDown={handleKeyDown}
                     listIsOpen={listIsOpen}
                 />
             </div>
@@ -90,6 +133,6 @@ const Droplist = <T,>({
 
 
     )
-}
 
+}
 export default Droplist;

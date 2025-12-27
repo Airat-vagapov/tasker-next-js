@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, useRef } from "react";
+import { ChangeEvent, FocusEvent, useRef, KeyboardEvent } from "react";
 import Icon from '@/ui/Icon/Icon';
 
 type InputProps = {
@@ -14,6 +14,7 @@ type InputProps = {
     disable?: boolean;
     arrow?: boolean;
     listIsOpen?: boolean;
+    onKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -28,7 +29,8 @@ const Input: React.FC<InputProps> = ({
     errorText,
     disable,
     arrow,
-    listIsOpen
+    listIsOpen,
+    onKeyDown,
 }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const handleFocus = () => {
@@ -55,6 +57,7 @@ const Input: React.FC<InputProps> = ({
                     onFocus={handleFocus}
                     onChange={onChange}
                     onBlur={onBlur}
+                    // onKeyDown={onKeyDown}
                     value={value}
                 />
                 {arrow &&

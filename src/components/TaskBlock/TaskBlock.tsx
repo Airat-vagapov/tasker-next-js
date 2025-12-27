@@ -26,7 +26,7 @@ const TaskBlock = () => {
         order: searchParams.get('order') ?? undefined,
     }
 
-    console.log(params)
+    console.log('params', params)
 
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
