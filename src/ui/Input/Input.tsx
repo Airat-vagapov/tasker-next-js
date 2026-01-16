@@ -1,5 +1,6 @@
 import { ChangeEvent, FocusEvent, useRef, KeyboardEvent } from "react";
 import Icon from '@/ui/Icon/Icon';
+import Tooltip from "../Tooltip/Tooltip";
 
 type InputProps = {
     label?: string;
@@ -15,6 +16,7 @@ type InputProps = {
     arrow?: boolean;
     listIsOpen?: boolean;
     onKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void;
+    tooltipText?: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -31,6 +33,7 @@ const Input: React.FC<InputProps> = ({
     arrow,
     listIsOpen,
     onKeyDown,
+    tooltipText
 }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const handleFocus = () => {
@@ -41,7 +44,11 @@ const Input: React.FC<InputProps> = ({
 
     return (
         <div className="flex flex-col gap-4">
-            <label htmlFor={name}>{label}</label>
+            <div className="flex gap-2">
+                <label htmlFor={name}>{label}</label>
+                {tooltipText && <Tooltip text={tooltipText} />}
+
+            </div>
             <div className="relative">
                 <input
                     ref={inputRef}
