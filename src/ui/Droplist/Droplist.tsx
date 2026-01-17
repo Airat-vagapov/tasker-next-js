@@ -14,7 +14,6 @@ type DroplistProps<T> = {
     onBlur: (e: FocusEvent<any, Element>) => void;
     value: string | number;
     options: ISelectData[];
-    form: FormikProps<T>;
 }
 
 const Droplist = <T,>({
@@ -26,7 +25,6 @@ const Droplist = <T,>({
     onBlur,
     value,
     options,
-    form,
 }: DroplistProps<T>) => {
     const [field, meta, helpers] = useField(name);
     const [listIsOpen, setListIsOpen] = useState<boolean>(false)
