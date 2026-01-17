@@ -18,7 +18,7 @@ import axios from "axios"
 export const getModels = async () => {
    try {
       const res = await axios.get('api/ai/generate2')
-      console.log(res)
+      (res)
       return res.data
    } catch(error) {
       console.error('Ошибка генерации текста:', error)

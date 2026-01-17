@@ -47,7 +47,7 @@ const AddNewTaskForm = () => {
             addNewTaskForm.resetForm();
         },
         onError: (error) => {
-            console.log(error)
+            (error)
             setFetchError(error);
             setTaskIsAdded(false);
             setTaskAddError(true);
@@ -99,7 +99,7 @@ const AddNewTaskForm = () => {
                     {/* <Button text={"Generate task description"} onClick={async () => {
                         if (addNewTaskForm.values.title) {
                             const result = await generateText(addNewTaskForm.values.title)
-                            console.log('Результат генерации', result)
+                            ('Результат генерации', result)
                             const { setFieldValue } = addNewTaskForm;
                             setFieldValue('description', result)
                         }

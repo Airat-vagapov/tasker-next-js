@@ -56,7 +56,7 @@ export const taskApi = {
 
     deleteTask: async (id:number) => {
 
-        console.log(id)
+        (id)
         try {
             const res = await axios.delete(`${BASE_URL}/task/${id}`, {"method" : 'DELETE'})
             return res    
@@ -69,7 +69,7 @@ export const taskApi = {
 
     // changeTaskStatus: async (id:number, task: ITask) => {
     changeTaskStatus: async (task: ITask) => {
-        console.log(`перед запросом`, task)
+        (`перед запросом`, task)
         try {
             const res = await axios.post(`${BASE_URL}/task/${task.id}`, {task})
             return res.data    
@@ -91,7 +91,7 @@ export const taskApi = {
 }
 
 const handleApiError = (error: any) => {
-    console.log(error)
+    (error)
     if (error.response?.status === 404) {
                 throw new Error("Ошибка запроса (404)");
             } else if (error.response?.status >= 500) {

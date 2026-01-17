@@ -12,7 +12,9 @@ const Button: React.FC<ButtonProps> = ({ text, btnType, onClick, icon }) => {
         <button
             type={btnType}
             onClick={onClick}
-            className="flex items-center justify-center gap-2 cursor-pointer p-[10px] text-mainwhite bg-blue hover:bg-blueHover duration-300 rounded-lg text-center"
+            className="flex items-center justify-center gap-2 cursor-pointer p-[10px] h-14
+            text-mainwhite bg-blue 
+            hover:bg-blueHover duration-300 rounded-lg text-center"
         >
             {icon && <Icon {...icon}></Icon>}
             <span>

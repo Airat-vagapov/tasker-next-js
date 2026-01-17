@@ -27,8 +27,6 @@ const TaskBlock = () => {
         priority: searchParams.get('priority') ?? undefined,
     }
 
-    console.log(deletedTask)
-
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
         queryKey: ['allTasks', params],

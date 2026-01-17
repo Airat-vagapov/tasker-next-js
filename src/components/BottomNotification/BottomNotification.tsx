@@ -21,7 +21,7 @@ const BottomNotification: React.FC<BottomNotificationProps> = ({
 }) => {
     const [showBlock, setShowBlock] = useState<boolean>(true);
 
-    console.log('BN', content)
+    ('BN', content)
 
     return (
         <div

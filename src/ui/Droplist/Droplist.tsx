@@ -34,10 +34,6 @@ const Droplist = <T,>({
     const selectRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null);
 
-    console.log('field', field)
-    console.log('meta', meta)
-    console.log('helpers', helpers)
-
     // Закрытие при клике вне селекта
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {

@@ -33,7 +33,7 @@ const FilterBlock = () => {
 
     return (
         <>
-            <div className="p-8 flex flex-col justify-center gap-4 rounded-xl bg-lightblack text-white">
+            <div className="p-8 flex flex-col justify-end gap-4 rounded-xl bg-lightblack text-white">
                 <Formik<FilterValuesProps>
                     initialValues={{
                         search_id: '',
@@ -44,7 +44,6 @@ const FilterBlock = () => {
                         order: '',
                     }}
                     onSubmit={(values) => {
-                        console.log('form values', values)
                         const searchParams = new URLSearchParams();
                         Object.entries(values).forEach(([key, value]) => {
                             if (value) searchParams.set(key, String(value).toLowerCase())
@@ -53,7 +52,7 @@ const FilterBlock = () => {
                     }}
                 >
                     {(filterForm) => (
-                        <Form className="grid grid-cols-4 gap-8">
+                        <Form className="grid grid-cols-4 gap-8 items-end">
                             <Input
                                 label="Task ID"
                                 id="search_id"
