@@ -27,25 +27,13 @@ const TaskBlock = () => {
         priority: searchParams.get('priority') ?? undefined,
     }
 
-    console.log('params', params)
+    console.log(deletedTask)
 
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
         queryKey: ['allTasks', params],
         queryFn: () => taskApi.getAllTasks(params)
     })
-
-    // const { data: tasksDone, isFetching: isFetchingDoneTasks, error: doneTasksFetchError } = useQuery({
-    //     queryKey: ['tasksDone'],
-    //     queryFn: taskApi.getDoneTasks,
-    //     staleTime: 1000 * 60 * 5
-    // })
-
-    // const { data: tasksActive, isFetching: isFetchingActiveTasks, error: activeTasksFetchError } = useQuery({
-    //     queryKey: ['tasksActive'],
-    //     queryFn: taskApi.getActiveTasks,
-    //     staleTime: 1000 * 60 * 5
-    // })
 
     // const errorData = tasksFetchError || activeTasksFetchError || doneTasksFetchError || null
     const errorData = tasksFetchError || null
@@ -64,14 +52,17 @@ const TaskBlock = () => {
                 {/* {tasksActive && <TaskList title={'Active tasks'} data={tasksActive} />} */}
                 {/* {tasksDone && <TaskList title={'Done tasks'} data={tasksDone} />} */}
                 {errorData && <ErrorBottom errorText={errorData?.message || 'Something went wrong'} />}
+                {deletedTask &&
+                    <BottomNotification
+                        content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
+                        handleClose={() => {
+                            removeDeletedTask()
+                        }}
+                        showButton={true}
+                        showStatus={true}
+                    />
+                }
 
-                <BottomNotification
-                    content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
-                    handleClose={() => {
-                        removeDeletedTask()
-                    }}
-                    showButton={false}
-                />
             </div>
         </>
     );

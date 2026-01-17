@@ -63,7 +63,7 @@ const FilterBlock = () => {
                                 onChange={filterForm.handleChange}
                                 onBlur={filterForm.handleBlur}
                                 value={filterForm.values.search_id}
-                                tooltipText="Enter task ID for search"
+                                tooltipText="Search by task ID"
                             ></Input>
                             <Input
                                 label="Search"

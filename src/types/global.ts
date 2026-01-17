@@ -13,5 +13,6 @@ export interface IContextMenuData {
     name: string;
     icon: IconProps;
     // action?: (func: ((b:boolean)=>void)) => Promise<void>;
+    id: number; // ID задачи
     action?: (id: number)=>void;
 }

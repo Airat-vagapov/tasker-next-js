@@ -6,14 +6,14 @@ import { useQueryClient } from "@tanstack/react-query";
 const useDeleteTask = () => {
     // Store
     const deletedTask = useTaskStore((state) => state.deletedTask)
+    const updateDeletedTask = useTaskStore((state)=>state.updateDeletedTask)
     // API
     const queryClient = useQueryClient();
     const deleteTask = useMutation({
         mutationFn: taskApi.deleteTask,
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey:['tasks']})
-            queryClient.invalidateQueries({queryKey:['tasksDone']})
-            queryClient.invalidateQueries({queryKey:['tasksActive']})
+        onSuccess: (data) => {
+            updateDeletedTask(data.data.result)
+            queryClient.invalidateQueries({ queryKey: ['allTasks'] });
         }
     })
 

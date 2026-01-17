@@ -21,11 +21,13 @@ const BottomNotification: React.FC<BottomNotificationProps> = ({
 }) => {
     const [showBlock, setShowBlock] = useState<boolean>(true);
 
+    console.log('BN', content)
+
     return (
         <div
             className={`fixed w-fit bottom-4 left-[50%] right-0  text-mainblack
                 transition-transform duration-500 transform 
-                translate-x-[-50%]
+                translate-x-[-50%] w-full
                 ${(showStatus && showBlock) ? 'translate-y-0' : 'translate-y-[calc(100%+16px)]'
                 }`}
         >
@@ -33,23 +35,27 @@ const BottomNotification: React.FC<BottomNotificationProps> = ({
                 <div className="flex justify-between items-center 
                 bg-gray py-4 px-6 rounded-xl text-white
                 shadow-[20px] shadow-mainblack
+                z-50
                 ">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 w-full">
                         <Icon name={'check_circle'} color="mainGreen" size={40}></Icon>
                         <div>
                             <p className='font-bold'>{content.title}</p>
                             <p>{content.text}</p>
                         </div>
                         {showButton &&
-                            <Button
-                                text="Close"
-                                onClick={
-                                    () => {
-                                        handleClose()
-                                        setShowBlock(false);
+                            <div className="ml-auto">
+                                <Button
+                                    text="Close"
+                                    onClick={
+                                        () => {
+                                            handleClose()
+                                            setShowBlock(false);
+                                        }
                                     }
-                                }
-                            />}
+                                />
+                            </div>
+                        }
                     </div>
 
 
