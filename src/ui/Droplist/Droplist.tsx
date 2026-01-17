@@ -101,7 +101,7 @@ const Droplist = <T,>({
                 />
             </div>
 
-            <div className={`absolute w-[100%] top-[calc(100%+8px)] duration-300 transition-all
+            <div className={`absolute w-[100%] top-[calc(100%+8px)] duration-300 transition-all z-1
                 ${listIsOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-90 opacity-0 pointer-events-none'}
                 `}>
                 <ul className='flex flex-col bg-mainblack rounded-md'>
@@ -114,7 +114,7 @@ const Droplist = <T,>({
                                 key={indx}
                                 onClick={() => {
                                     setListIsOpen(false)
-                                    form.setFieldValue(name, item.title)
+                                    handleSelect(item)
                                 }}
                             >
                                 {item.title}

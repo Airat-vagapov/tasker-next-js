@@ -64,7 +64,6 @@ const Input: React.FC<InputProps> = ({
                     onFocus={handleFocus}
                     onChange={onChange}
                     onBlur={onBlur}
-                    // onKeyDown={onKeyDown}
                     value={value}
                 />
                 {arrow &&
