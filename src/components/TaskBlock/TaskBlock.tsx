@@ -28,6 +28,8 @@ const TaskBlock = () => {
         priority: searchParams.get('priority') ?? undefined,
     }
 
+    console.log('prarms', params)
+
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
         queryKey: ['allTasks', params],

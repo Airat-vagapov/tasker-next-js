@@ -13,11 +13,11 @@ import TextLink from "@/ui/TextLink/TextLink";
 
 type FilterBlockProps = {
     params: {
-        status_id: string,
-        priority: string,
-        search: string,
-        sortBy: string,
-        order: string,
+        task_id: string | undefined,
+        priority: string | undefined,
+        search: string | undefined,
+        sortBy: string | undefined,
+        order: string | undefined,
     };
 }
 
@@ -41,18 +41,16 @@ const FilterBlock: React.FC<FilterBlockProps> = ({ params }) => {
         sortBy: string,
         order: string,
     }
-    console.log('status_id', params.status_id)
     return (
         <>
             <div className="p-8 flex flex-col justify-end gap-4 rounded-xl bg-lightblack text-white">
                 <Formik<FilterValuesProps>
                     initialValues={{
-                        task_id: params.status_id ?? '',
-                        // status_id: '',
-                        priority: '',
-                        search: '',
-                        sortBy: '',
-                        order: '',
+                        task_id: params.task_id ?? '',
+                        priority: params.priority ?? '',
+                        search: params.search ?? '',
+                        sortBy: params.sortBy ?? '',
+                        order: params.order ?? '',
                     }}
                     onSubmit={(values) => {
                         const searchParams = new URLSearchParams();
@@ -90,7 +88,8 @@ const FilterBlock: React.FC<FilterBlockProps> = ({ params }) => {
                             <div className="absolute top-0 right-0">
                                 <TextLink type={'action'} action={() => {
                                     filterForm.resetForm()
-                                    filterForm.submitForm()
+                                    router.push('/') 
+                                    // filterForm.submitForm()
 
                                 }}>Clear form</TextLink>
                             </div>
