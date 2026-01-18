@@ -23,15 +23,15 @@ const ErrorBlock: React.FC<ErrorBlockProps> = ({
 }) => {
     return (
         <div className={`flex flex-col items-center justify-center gap-4 rounded-xl p-8
-            ${blockColor == 'white' ? 'bg-white' : ''}
+            ${blockColor === 'white' ? 'bg-white' : 'bg-lightblack'}
         `}>
             <Icon name={"error"} size={48} color={"errorRed"} />
             <div className="flex flex-col items-center justify-center gap-2 w-full">
                 <Title>{title}</Title>
                 <div className={`
                     text-base w-full
-                    ${blockColor == 'white' ? 'text-black' : ''}
-                    ${textPosition == 'center' ? 'text-center' : 'text-left'}    
+                    ${blockColor === 'white' ? 'text-black' : ''}
+                    ${textPosition === 'center' ? 'text-center' : 'text-left'}    
                 `}>{text}</div>
                 {actionText &&
                     <TextLink type="action" action={action}>

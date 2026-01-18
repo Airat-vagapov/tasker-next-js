@@ -48,14 +48,13 @@ const TaskBlock = () => {
                 <FilterBlock />
 
                 {tasks && <TaskList title={'All tasks'} data={tasks} />}
-                {/* {!tasks && } */}
-                <ErrorBlock 
-                title={'Tasks not found'}
-                text='Try use another search query'
-                textPosition='center'
-                actionText="do something"
-                blockColor="white"
-                />
+                {(tasks && tasks.length == 0) && <ErrorBlock
+                    title={'Tasks not found'}
+                    text='Try use another search query'
+                    textPosition='center'
+                    // blockColor="white"
+                />}
+
 
                 {errorData && <ErrorBottom errorText={errorData?.message || 'Something went wrong'} />}
                 {
