@@ -8,11 +8,8 @@ import { ISelectData } from '@/types/global';
 type DroplistProps<T> = {
     id: string;
     name: string;
-    label: string;
+    label?: string;
     placeholder?: string;
-    onChange: (e: ChangeEvent<any>) => void;
-    onBlur: (e: FocusEvent<any, Element>) => void;
-    value: string | number;
     options: ISelectData[];
 }
 
@@ -21,9 +18,6 @@ const Droplist = <T,>({
     name,
     label,
     placeholder,
-    onChange,
-    onBlur,
-    value,
     options,
 }: DroplistProps<T>) => {
     const [field, meta, helpers] = useField(name);
@@ -48,7 +42,7 @@ const Droplist = <T,>({
 
     const handleSelect = (option: ISelectData) => {
         helpers.setValue(option.title);
-        helpers.setTouched(true); // ✅ Важно для валидации
+        helpers.setTouched(true);
         setListIsOpen(false);
         buttonRef.current?.focus();
     };
@@ -89,9 +83,6 @@ const Droplist = <T,>({
                     label={label}
                     inptType="text"
                     placeholder={placeholder}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
                     disable={true}
                     arrow={true}
                     onKeyDown={handleKeyDown}

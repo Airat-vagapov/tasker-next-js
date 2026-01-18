@@ -1,7 +1,7 @@
 import Button from "@/ui/Button/Button";
 import Container from "@/ui/Container/Container";
 import Icon from "@/ui/Icon/Icon";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type BottomNotificationProps = {
     showStatus?: boolean;
@@ -21,7 +21,26 @@ const BottomNotification: React.FC<BottomNotificationProps> = ({
 }) => {
     const [showBlock, setShowBlock] = useState<boolean>(true);
 
-    ('BN', content)
+    // Открытие по 
+    useEffect(() => {
+        if (showStatus) {
+            setShowBlock(showStatus)
+        }
+    }, [showStatus])
+
+    useEffect(() => {
+        let closeTimeout: NodeJS.Timeout
+        if (showBlock && showStatus) {
+            closeTimeout = setTimeout(() => {
+                setShowBlock(false);
+                handleClose();
+            }, 2000)
+        }
+
+        return () => {
+            clearTimeout(closeTimeout)
+        }
+    }, [showBlock, showStatus])
 
     return (
         <div
@@ -33,8 +52,8 @@ const BottomNotification: React.FC<BottomNotificationProps> = ({
         >
             <Container>
                 <div className="flex justify-between items-center 
-                bg-gray py-4 px-6 rounded-xl text-white
-                shadow-[20px] shadow-mainblack
+                bg-gray py-4 px-6 rounded-xl text-black
+                shadow-[20px] shadow-mainblack bg-white
                 z-50
                 ">
                     <div className="flex items-center gap-4 w-full">

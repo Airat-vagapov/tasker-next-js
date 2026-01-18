@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormik } from "formik";
+import { Form, Formik, useFormik } from "formik";
 import * as yup from "yup";
 
 import { useState } from "react";
@@ -20,12 +20,6 @@ import { taskApi } from "@/api/taskApi";
 
 import { generateText, getModels } from "@/api/aiApi";
 
-type AddNewTaskFormValues = {
-    title: string;
-    description: string;
-    priority: string;
-}
-
 const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
@@ -40,11 +34,8 @@ const AddNewTaskForm = () => {
         mutationFn: taskApi.addTask,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['allTasks'] })
-            // queryClient.invalidateQueries({ queryKey: ['tasksDone'] })
-            // queryClient.invalidateQueries({ queryKey: ['tasksActive'] })
             setTaskAddError(false);
             setTaskIsAdded(true);
-            addNewTaskForm.resetForm();
         },
         onError: (error) => {
             (error)
@@ -54,49 +45,49 @@ const AddNewTaskForm = () => {
         }
     })
 
-    // Formik settings
-    // TO DO: перевести на <Form> и убрать useFormik
-    const addNewTaskForm = useFormik<AddNewTaskFormValues>({
-        initialValues: {
-            title: '',
-            description: '',
-            priority: 'Medium',
-        },
-        validationSchema: yup.object({
-            title: yup.string().required("Required"),
-            description: yup.string().required("Required"),
-        }),
-        onSubmit: async (values) => {
-            addTask.mutate(values)
-        },
-    });
-
-    const { errors, touched } = addNewTaskForm;
+    // const { errors, touched } = addNewTaskForm;
 
     // Детали ошибки
     const errorMsg = fetchError?.message || "";
     const errorCode = fetchError?.response?.status || "";
     const errorDetail = fetchError?.stack || '';
 
+    // Fromik settings
+    type FilterValuesProps = {
+        title: string,
+        description: string,
+        priority: string,
+    }
+
     return (
         <div className="relative">
             {!taskIsAdded && !taskAddError && (
-                <form
-                    className="flex flex-col gap-5"
-                    onSubmit={addNewTaskForm.handleSubmit}
+                <Formik<FilterValuesProps>
+                    initialValues={{
+                        title: '',
+                        description: '',
+                        priority: 'Medium',
+                    }}
+                    validationSchema={yup.object({
+                        title: yup.string().required("Required"),
+                        description: yup.string().required("Required"),
+                    })}
+                    onSubmit={(values, { resetForm }) => {
+                        addTask.mutate(values)
+                        resetForm();
+                    }}
                 >
-                    <p className="text-center">Add new task</p>
-                    <Input
-                        label="Name"
-                        id="text"
-                        name="title"
-                        inptType="text"
-                        onChange={addNewTaskForm.handleChange}
-                        onBlur={addNewTaskForm.handleBlur}
-                        value={addNewTaskForm.values.title}
-                        errorText={errors.title}
-                    />
-                    {/* <Button text={"Generate task description"} onClick={async () => {
+                    {() => (
+                        <Form className="flex flex-col gap-5">
+                            <p className="text-center">Add new task</p>
+                            <Input
+                                label="Name"
+                                id="text"
+                                name="title"
+                                inptType="text"
+
+                            />
+                            {/* <Button text={"Generate task description"} onClick={async () => {
                         if (addNewTaskForm.values.title) {
                             const result = await generateText(addNewTaskForm.values.title)
                             ('Результат генерации', result)
@@ -105,64 +96,63 @@ const AddNewTaskForm = () => {
                         }
                     }}></Button> */}
 
-                    <Textarea
-                        label="Description"
-                        name="description"
-                        id="description"
-                        onChange={addNewTaskForm.handleChange}
-                        onBlur={addNewTaskForm.handleBlur}
-                        value={addNewTaskForm.values.description}
-                        errorText={errors.description}
+                            <Textarea
+                                label="Description"
+                                name="description"
+                                id="description"
+                            />
+
+                            <Droplist
+                                id="priority"
+                                name="priority"
+                                label="Priority"
+                                placeholder="Select priority"
+                                options={priorityData}
+                            />
+
+                            <Button btnType="submit" text={"Add new task"} />
+                        </Form>
+                    )}
+                </Formik>
+            )}
+
+            {
+                taskIsAdded && (
+                    <SuccessBlock
+                        title="New task succesfully added!"
+                        text="You can see new task on main page"
+                        actionText="Add another task"
+                        action={() => setTaskIsAdded(false)}
                     />
+                )
+            }
 
-                    <Droplist
-                        id="priority"
-                        name="priority"
-                        label="Priority"
-                        onChange={addNewTaskForm.handleChange}
-                        onBlur={addNewTaskForm.handleBlur}
-                        value={addNewTaskForm.values.priority}
-                        options={priorityData}
-                        form={addNewTaskForm}
+            {
+                taskAddError && (
+                    <ErrorBlock
+                        title="Ops! Error!"
+                        text={
+                            <>
+                                <span>{`${errorCode} `}</span>
+                                {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
+                                <Accordeon
+                                    title="Details"
+                                    content={
+                                        <>
+                                            {typeof errorDetail == "object" ? JSON.stringify(errorDetail) : errorDetail}
+                                        </>
+                                    }
+                                >
+                                </Accordeon>
+
+                            </>
+                        }
+                        actionText="Try again"
+                    // action={() => addNewTaskForm.handleSubmit()}
                     />
-
-                    <Button btnType="submit" text={"Add new task"} />
-                </form>
-            )}
-
-            {taskIsAdded && (
-                <SuccessBlock
-                    title="New task succesfully added!"
-                    text="You can see new task on main page"
-                    actionText="Add another task"
-                    action={() => setTaskIsAdded(false)}
-                />
-            )}
-
-            {taskAddError && (
-                <ErrorBlock
-                    title="Ops! Error!"
-                    text={
-                        <>
-                            <span>{`${errorCode} `}</span>
-                            {typeof errorMsg == "object" ? JSON.stringify(errorMsg) : errorMsg}
-                            <Accordeon
-                                title="Details"
-                                content={
-                                    <>
-                                        {typeof errorDetail == "object" ? JSON.stringify(errorDetail) : errorDetail}
-                                    </>
-                                }
-                            >
-                            </Accordeon>
-
-                        </>
-                    }
-                    actionText="Try again"
-                    action={() => addNewTaskForm.handleSubmit()}
-                />
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 

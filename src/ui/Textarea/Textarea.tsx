@@ -1,12 +1,13 @@
+import { useField } from "formik";
 import { ChangeEvent, FocusEvent, useRef } from "react";
 
 type TextareaProps = {
     label: string;
     name: string;
     id: string;
-    onChange: (e: ChangeEvent<any>) => void;
-    onBlur: (e: FocusEvent<any, Element>) => void;
-    value: string | number;
+    // onChange: (e: ChangeEvent<any>) => void;
+    // onBlur: (e: FocusEvent<any, Element>) => void;
+    // value: string | number;
     errorText?: string;
 
 }
@@ -15,13 +16,10 @@ const Textarea: React.FC<TextareaProps> = ({
     label,
     name,
     id,
-    onChange,
-    onBlur,
-    value,
     errorText,
 }) => {
     // const textAreaRef = useRef<HTMLTextAreaElement>(null)
-
+    const [field, meta, helpers] = useField(name)
     return (
         <div className="flex flex-col gap-2">
             {label && <p>{label}</p>}
@@ -37,9 +35,9 @@ const Textarea: React.FC<TextareaProps> = ({
                     id={id}
                     cols={30}
                     rows={10}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    value={field.value}
                 ></textarea>
                 <span
                     className={`absolute top-[4px] left-[12px] text-[12px] text-errorRed transition-all duration-300

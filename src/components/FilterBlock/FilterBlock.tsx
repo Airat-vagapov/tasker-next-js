@@ -59,9 +59,6 @@ const FilterBlock = () => {
                                 name="search_id"
                                 placeholder="Enter task ID"
                                 inptType="text"
-                                onChange={filterForm.handleChange}
-                                onBlur={filterForm.handleBlur}
-                                value={filterForm.values.search_id}
                                 tooltipText="Search by task ID"
                             ></Input>
                             <Input
@@ -70,9 +67,6 @@ const FilterBlock = () => {
                                 name="search"
                                 placeholder="Enter search query"
                                 inptType="text"
-                                onChange={filterForm.handleChange}
-                                onBlur={filterForm.handleBlur}
-                                value={filterForm.values.search}
                                 tooltipText="Search by task title and description"
                             ></Input>
                             <Droplist
@@ -80,10 +74,6 @@ const FilterBlock = () => {
                                 name="priority"
                                 label="Priority"
                                 placeholder="Select priotity"
-                                onChange={filterForm.handleChange}
-                                onBlur={filterForm.handleBlur}
-                                value={filterForm.values.priority}
-                                form={filterForm}
                                 options={priorityData}
                             />
 

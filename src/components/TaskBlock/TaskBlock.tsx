@@ -47,17 +47,16 @@ const TaskBlock = () => {
                 <FilterBlock />
 
                 {tasks && <TaskList title={'All tasks'} data={tasks} />}
-                {/* {tasksActive && <TaskList title={'Active tasks'} data={tasksActive} />} */}
-                {/* {tasksDone && <TaskList title={'Done tasks'} data={tasksDone} />} */}
                 {errorData && <ErrorBottom errorText={errorData?.message || 'Something went wrong'} />}
-                {deletedTask &&
+                {
+
                     <BottomNotification
                         content={{ title: 'Success', text: `Task #${deletedTask?.id} ${deletedTask?.title}  deleted is successful` }}
                         handleClose={() => {
                             removeDeletedTask()
                         }}
                         showButton={true}
-                        showStatus={true}
+                        showStatus={!!deletedTask}
                     />
                 }
 

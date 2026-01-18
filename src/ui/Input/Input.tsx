@@ -1,6 +1,7 @@
 import { ChangeEvent, FocusEvent, useRef, KeyboardEvent } from "react";
 import Icon from '@/ui/Icon/Icon';
 import Tooltip from "../Tooltip/Tooltip";
+import { useField } from "formik";
 
 type InputProps = {
     label?: string;
@@ -8,9 +9,9 @@ type InputProps = {
     name: string;
     placeholder?: string,
     inptType: string;
-    onChange: (e: ChangeEvent<any>) => void;
-    onBlur: (e: FocusEvent<any, Element>) => void;
-    value: string | number;
+    // onChange: (e: ChangeEvent<any>) => void;
+    // onBlur: (e: FocusEvent<any, Element>) => void;
+    // value: string | number;
     errorText?: string;
     disable?: boolean;
     arrow?: boolean;
@@ -25,9 +26,6 @@ const Input: React.FC<InputProps> = ({
     name,
     placeholder,
     inptType,
-    onChange,
-    onBlur,
-    value,
     errorText,
     disable,
     arrow,
@@ -35,6 +33,9 @@ const Input: React.FC<InputProps> = ({
     onKeyDown,
     tooltipText
 }) => {
+    // Formik field
+    const [field, meta, helpers] = useField(name);
+
     const inputRef = useRef<HTMLInputElement>(null);
     const handleFocus = () => {
         if (disable) {
@@ -62,9 +63,9 @@ const Input: React.FC<InputProps> = ({
                     placeholder={placeholder}
                     type={inptType}
                     onFocus={handleFocus}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    value={field.value}
                 />
                 {arrow &&
                     <div className={`absolute top-1/2 -translate-y-1/2 right-2 text-gray duration-300
