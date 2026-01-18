@@ -1,5 +1,13 @@
-const Title = ({ children }: { children: React.ReactNode }) => {
-    return <p className="text-xl">{children}</p>;
+type TitleProps = {
+    children: React.ReactNode
+    color?: string;
+}
+
+const Title: React.FC<TitleProps> = ({ children, color = 'black' }) => {
+    return <p className={`text-xl
+        ${color == 'white' ? 'text-white' : 'text-black'}    
+        `}
+    >{children}</p>;
 };
 
 export default Title;

@@ -9,6 +9,7 @@ import { taskApi } from '@/api/taskApi'
 import Preloader from "@/ui/Preloader/Preloader";
 import TaskList from "./TaskList/TaskList";
 import FilterBlock from "@/components/FilterBlock/FilterBlock";
+import ErrorBlock from "../ErrorBlock/ErrorBlock";
 
 
 const TaskBlock = () => {
@@ -47,6 +48,15 @@ const TaskBlock = () => {
                 <FilterBlock />
 
                 {tasks && <TaskList title={'All tasks'} data={tasks} />}
+                {/* {!tasks && } */}
+                <ErrorBlock 
+                title={'Tasks not found'}
+                text='Try use another search query'
+                textPosition='center'
+                actionText="do something"
+                blockColor="white"
+                />
+
                 {errorData && <ErrorBottom errorText={errorData?.message || 'Something went wrong'} />}
                 {
 
