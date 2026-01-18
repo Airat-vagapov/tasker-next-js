@@ -10,9 +10,11 @@ interface ApiResponse {
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const taskApi = {
-    getAllTasks: async ({search_id, search, status, sortBy, order = 'desc', priority}: getAllTasksParams) => {
+    getAllTasks: async ({task_id, search, status, sortBy, order = 'desc', priority}: getAllTasksParams) => {
         try {
-            const {data} = await axios.get<ApiResponse>(`${BASE_URL}/tasks`, {params: {search_id, search, status, sortBy, order, priority}})
+            const {data} = await axios.get<ApiResponse>(`${BASE_URL}/tasks`, 
+                {params: {task_id, search, status, sortBy, order, priority}}
+            )
             return data.result
         } catch (error) {
             handleApiError(error)
@@ -69,7 +71,6 @@ export const taskApi = {
 
     // changeTaskStatus: async (id:number, task: ITask) => {
     changeTaskStatus: async (task: ITask) => {
-        (`перед запросом`, task)
         try {
             const res = await axios.post(`${BASE_URL}/task/${task.id}`, {task})
             return res.data    

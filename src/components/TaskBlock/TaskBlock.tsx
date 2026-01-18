@@ -20,9 +20,9 @@ const TaskBlock = () => {
     // Get URL params
     const searchParams = useSearchParams()
     const params = {
-        search_id: searchParams.get('search_id') ?? undefined,
+        task_id: searchParams.get('task_id') ?? undefined,
         search: searchParams.get('search') ?? undefined,
-        status: searchParams.get('status') ?? undefined,
+        // status: searchParams.get('status') ?? undefined,
         sortBy: searchParams.get('sortBy') ?? undefined,
         order: searchParams.get('order') ?? undefined,
         priority: searchParams.get('priority') ?? undefined,
@@ -45,17 +45,16 @@ const TaskBlock = () => {
             {(isShowPreloader) && <Preloader></Preloader>}
 
             <div className="flex flex-col gap-5">
-                <FilterBlock />
+                <FilterBlock params={params} />
 
                 {tasks && <TaskList title={'All tasks'} data={tasks} />}
-                {/* {!tasks && } */}
-                <ErrorBlock 
-                title={'Tasks not found'}
-                text='Try use another search query'
-                textPosition='center'
-                actionText="do something"
-                blockColor="white"
-                />
+                {(tasks && tasks.length == 0) && <ErrorBlock
+                    title={'Tasks not found'}
+                    text='Try use another search query'
+                    textPosition='center'
+                // blockColor="white"
+                />}
+
 
                 {errorData && <ErrorBottom errorText={errorData?.message || 'Something went wrong'} />}
                 {
