@@ -23,7 +23,7 @@ const TaskDetail: React.FC<TaskDetailProps> = (id) => {
             {isFetching && <Preloader />}
             {task &&
                 <div className="flex flex-col gap-6">
-                    <TaskDetailHeader task={task}>{`#${task.id} ${task.title}`}</TaskDetailHeader>
+                    <TaskDetailHeader task={task}><span className="text-gray text-2xl">#{task.id}</span>{` ${task.title}`}</TaskDetailHeader>
                     <div className="flex gap-10 items-stretch">
                         <div className="basis-full">
                             <ContentBlock classes="h-full">
