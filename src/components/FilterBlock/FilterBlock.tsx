@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 // Data
 import { priorityData } from '@/data/priority'
+import TextLink from "@/ui/TextLink/TextLink";
 
 const FilterBlock = () => {
     const router = useRouter()
@@ -52,7 +53,7 @@ const FilterBlock = () => {
                     }}
                 >
                     {(filterForm) => (
-                        <Form className="grid grid-cols-4 gap-8 items-end">
+                        <Form className="relative grid grid-cols-4 gap-8 items-end">
                             <Input
                                 label="Task ID"
                                 id="search_id"
@@ -76,8 +77,14 @@ const FilterBlock = () => {
                                 placeholder="Select priotity"
                                 options={priorityData}
                             />
+                            <div className="absolute top-0 right-0">
+                                <TextLink type={'action'} action={() => {
+                                    filterForm.resetForm()
+                                    filterForm.submitForm()
 
-                            <Button text={"Apply"} btnType='submit'></Button>
+                                }}>Clear form</TextLink>
+                            </div>
+                            <Button text={"Apply"} btnType='submit' />
                         </Form>
                     )}
                 </Formik>
