@@ -11,7 +11,17 @@ import { useEffect } from "react";
 import { priorityData } from '@/data/priority'
 import TextLink from "@/ui/TextLink/TextLink";
 
-const FilterBlock = () => {
+type FilterBlockProps = {
+    params: {
+        status_id: string,
+        priority: string,
+        search: string,
+        sortBy: string,
+        order: string,
+    };
+}
+
+const FilterBlock: React.FC<FilterBlockProps> = ({ params }) => {
     const router = useRouter()
 
     // Effects
@@ -24,21 +34,21 @@ const FilterBlock = () => {
 
     // Fromik settings
     type FilterValuesProps = {
-        search_id: string,
-        status_id: string,
+        task_id: string,
+        // status_id: string,
         priority: string,
         search: string,
         sortBy: string,
         order: string,
     }
-
+    console.log('status_id', params.status_id)
     return (
         <>
             <div className="p-8 flex flex-col justify-end gap-4 rounded-xl bg-lightblack text-white">
                 <Formik<FilterValuesProps>
                     initialValues={{
-                        search_id: '',
-                        status_id: '',
+                        task_id: params.status_id ?? '',
+                        // status_id: '',
                         priority: '',
                         search: '',
                         sortBy: '',
@@ -56,8 +66,8 @@ const FilterBlock = () => {
                         <Form className="relative grid grid-cols-4 gap-8 items-end">
                             <Input
                                 label="Task ID"
-                                id="search_id"
-                                name="search_id"
+                                id="task_id"
+                                name="task_id"
                                 placeholder="Enter task ID"
                                 inptType="text"
                                 tooltipText="Search by task ID"
