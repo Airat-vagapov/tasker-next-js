@@ -1,3 +1,5 @@
+import Card from "@/ui/Card/Card";
+
 type DashboardCardProps = {
     children: React.ReactNode;
 }

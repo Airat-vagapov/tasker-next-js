@@ -43,7 +43,7 @@ const FilterBlock: React.FC<FilterBlockProps> = ({ params }) => {
     }
     return (
         <>
-            <div className="p-8 flex flex-col justify-end gap-4 rounded-xl bg-lightblack text-white">
+            <div className="p-8 flex flex-col justify-end gap-4 rounded-xl  border-1 border-lightGray text-white">
                 <Formik<FilterValuesProps>
                     initialValues={{
                         task_id: params.task_id ?? '',

@@ -9,7 +9,7 @@ type TaskListProps = {
 
 const TaskList: React.FC<TaskListProps> = ({ title, data }) => {
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 border-1 border-lightGray rounded-xl p-6">
             {title && <p className="text-3xl">{`${title}`} <span className=" text-base text-gray align-middle">{data.length}</span></p>}
             <TaskSummaryBlock data={data} />
             {data &&

@@ -51,11 +51,6 @@ const Task: React.FC<TaskProps> = ({
                     </div>
                     {task && <p>{task.author}</p>}
                 </Link>
-                {/* <div className="w-fit">
-                        <Link href={`/task/${task?.id}`}>
-                            <Button text={'Show details'}></Button>
-                        </Link>
-                    </div> */}
             </div>
 
         </div>
