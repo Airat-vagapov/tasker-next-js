@@ -1,5 +1,5 @@
 import { ITask, INewTaskData } from "@/types/task";
-import {getAllTasksParams} from '@/api/tasks.types'
+import { getAllTasksParams } from '@/api/tasks.types'
 import axios from "axios";
 
 interface ApiResponse {
@@ -10,42 +10,46 @@ interface ApiResponse {
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const taskApi = {
-    getAllTasks: async ({task_id, search, status, sortBy, order = 'desc', priority}: getAllTasksParams) => {
+    getAllTasks: async ({ task_id, search, status, sortBy, order = 'desc', priority }: getAllTasksParams) => {
         try {
-            const {data} = await axios.get<ApiResponse>(`${BASE_URL}/tasks`, 
-                {params: {task_id, search, status, sortBy, order, priority}}
+            const { data } = await axios.get<ApiResponse>(`${BASE_URL}/tasks`,
+                {
+                    params: { task_id, search, status, sortBy, order, priority },
+                    timeout: 1000
+
+                }
             )
             return data.result
         } catch (error) {
             handleApiError(error)
             throw error
         }
-    },   
-    
+    },
+
     getActiveTasks: async () => {
         try {
-            const {data} = await axios
+            const { data } = await axios
                 .get<ApiResponse>(`${BASE_URL}/tasks/status?id=1,2`)
             return data.result
         } catch (error) {
             handleApiError(error)
             throw error
         }
-        
+
     },
 
     getDoneTasks: async () => {
         try {
-            const {data} = await axios
-            .get<ApiResponse>(`${BASE_URL}/tasks/status?id=3`)
-            return data.result    
+            const { data } = await axios
+                .get<ApiResponse>(`${BASE_URL}/tasks/status?id=3`)
+            return data.result
         } catch (error) {
             handleApiError(error)
             throw error
         }
-        
+
     },
-    
+
     addTask: async (task: INewTaskData) => {
         try {
             const res = await axios.post(`${BASE_URL}/task`, task)
@@ -56,24 +60,24 @@ export const taskApi = {
         }
     },
 
-    deleteTask: async (id:number) => {
+    deleteTask: async (id: number) => {
 
         (id)
         try {
-            const res = await axios.delete(`${BASE_URL}/task/${id}`, {"method" : 'DELETE'})
-            return res    
+            const res = await axios.delete(`${BASE_URL}/task/${id}`, { "method": 'DELETE' })
+            return res
         } catch (error) {
             handleApiError(error)
             throw error
         }
-        
+
     },
 
     // changeTaskStatus: async (id:number, task: ITask) => {
     changeTaskStatus: async (task: ITask) => {
         try {
-            const res = await axios.post(`${BASE_URL}/task/${task.id}`, {task})
-            return res.data    
+            const res = await axios.post(`${BASE_URL}/task/${task.id}`, { task })
+            return res.data
         } catch (error) {
             handleApiError(error)
             throw error
@@ -83,7 +87,7 @@ export const taskApi = {
     getTaskById: async (id: string) => {
         try {
             const res = await axios.get(`${BASE_URL}/task/${id}`)
-            return res    
+            return res
         } catch (error) {
             handleApiError(error)
             throw error
@@ -92,13 +96,35 @@ export const taskApi = {
 }
 
 const handleApiError = (error: any) => {
-    (error)
-    if (error.response?.status === 404) {
-                throw new Error("Ошибка запроса (404)");
-            } else if (error.response?.status >= 500) {
-                throw new Error("500 - Ошибка сервера. Попробуйте позже.");
-            } else {
-                throw new Error(`Ошибка при загрузке данных: ${error.response?.statusText} (${error.response?.status}) \n ${error.response?.data.message}`);
-                // throw new Error(error);
-            }
+    console.error('[API Error]:', error);
+    const code = error.code;
+
+
+    if (!error.response) {
+        if (code === "ERR_NETWORK") {
+            throw new Error("Ошибка. Проверьте настройки сети")
+        }
+        if (code === "ECONNABORTED") {
+            throw new Error("Таймуат запроса. Попробуйте еще раз")
+        }
+        throw new Error("Ошибка сети. Проверьте подключение к интернету.");
+    }
+
+    const status = error.response.status;
+    const message = error.response.data?.message || error.response.statusText;
+
+    if (status === 404) {
+        throw new Error("404 - Ошибка запроса. Адрес не найден.");
+    } else if (status >= 500) {
+        throw new Error("500 - Ошибка сервера. Попробуйте позже.");
+    } else {
+        throw new Error(`Ошибка при загрузке данных ${status}: ${message} \n ${error.response?.data.message}`);
+    }
+
+
+
+
+
+
+
 }

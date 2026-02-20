@@ -33,7 +33,8 @@ const TaskBlock = () => {
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
         queryKey: ['allTasks', params],
-        queryFn: () => taskApi.getAllTasks(params)
+        queryFn: () => taskApi.getAllTasks(params),
+        retry: 1,
     })
 
     // const errorData = tasksFetchError || activeTasksFetchError || doneTasksFetchError || null
