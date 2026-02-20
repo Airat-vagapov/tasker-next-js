@@ -28,13 +28,11 @@ const TaskBlock = () => {
         priority: searchParams.get('priority') ?? undefined,
     }
 
-    console.log('prarms', params)
-
     // API
     const { data: tasks, isFetching: isFetchingTasks, error: tasksFetchError } = useQuery({
         queryKey: ['allTasks', params],
         queryFn: () => taskApi.getAllTasks(params),
-        retry: 1,
+        retry: 0,
     })
 
     // const errorData = tasksFetchError || activeTasksFetchError || doneTasksFetchError || null
@@ -55,7 +53,6 @@ const TaskBlock = () => {
                     title={'Tasks not found'}
                     text='Try use another search query'
                     textPosition='center'
-                // blockColor="white"
                 />}
 
 
