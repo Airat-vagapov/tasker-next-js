@@ -1,5 +1,7 @@
-export interface registerData {
+export interface RegisterData {
+    firstName: string;
+    lastName: string;
     username: string;
     password: string;
-    role: string;
+    role?: string;
 }

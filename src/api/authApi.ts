@@ -1,4 +1,4 @@
-import { registerData } from '@/types/auth'
+import { RegisterData } from '@/types/auth'
 import axios from 'axios'
 import { handleApiError } from './taskApi'
 
@@ -7,9 +7,11 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 
 export const authApi = {
-    register: async ({ username, password, role }: registerData) => {
+    register: async ({ firstName, lastName, username, password, role }: RegisterData) => {
         const payload =
         {
+            firstName: firstName,
+            lastName: lastName,
             username: username,
             password: password,
             role: role,

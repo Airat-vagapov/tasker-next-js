@@ -1,3 +1,5 @@
+'use client'
+
 import { ChangeEvent, FocusEvent, useRef, KeyboardEvent } from "react";
 import Icon from '@/ui/Icon/Icon';
 import Tooltip from "../Tooltip/Tooltip";
@@ -7,11 +9,9 @@ type InputProps = {
     label?: string;
     id: string;
     name: string;
-    placeholder?: string,
     inptType: string;
-    // onChange: (e: ChangeEvent<any>) => void;
-    // onBlur: (e: FocusEvent<any, Element>) => void;
-    // value: string | number;
+
+    placeholder?: string,
     errorText?: string;
     disable?: boolean;
     arrow?: boolean;

@@ -24,9 +24,12 @@ const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
 
-    // TODO:
-    // Добавить типизацию ошибки
-    const [fetchError, setFetchError] = useState<any>(null);
+    type ApiError = Error & {
+        response?: {
+            status?: number;
+        };
+    };
+    const [fetchError, setFetchError] = useState<ApiError | null>(null);
 
     // API
     const queryClient = useQueryClient()
