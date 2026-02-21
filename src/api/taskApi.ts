@@ -1,5 +1,6 @@
 import { ITask, INewTaskData } from "@/types/task";
 import { getAllTasksParams } from '@/api/tasks.types'
+import { handleApiError } from "@/api/apiErrorHandler"
 import axios from "axios";
 
 interface ApiResponse {
@@ -15,7 +16,7 @@ export const taskApi = {
             const { data } = await axios.get<ApiResponse>(`${BASE_URL}/tasks`,
                 {
                     params: { task_id, search, status, sortBy, order, priority },
-                    timeout: 1000
+                    // timeout: 30000
 
                 }
             )
@@ -64,16 +65,14 @@ export const taskApi = {
 
         (id)
         try {
-            const res = await axios.delete(`${BASE_URL}/task/${id}`, { "method": 'DELETE' })
+            const res = await axios.delete(`${BASE_URL}/task/${id}`)
             return res
         } catch (error) {
             handleApiError(error)
             throw error
         }
-
     },
 
-    // changeTaskStatus: async (id:number, task: ITask) => {
     changeTaskStatus: async (task: ITask) => {
         try {
             const res = await axios.post(`${BASE_URL}/task/${task.id}`, { task })
@@ -95,36 +94,4 @@ export const taskApi = {
     }
 }
 
-const handleApiError = (error: any) => {
-    console.error('[API Error]:', error);
-    const code = error.code;
-
-
-    if (!error.response) {
-        if (code === "ERR_NETWORK") {
-            throw new Error("Ошибка. Проверьте настройки сети")
-        }
-        if (code === "ECONNABORTED") {
-            throw new Error("Таймуат запроса. Попробуйте еще раз")
-        }
-        throw new Error("Ошибка сети. Проверьте подключение к интернету.");
-    }
-
-    const status = error.response.status;
-    const message = error.response.data?.message || error.response.statusText;
-
-    if (status === 404) {
-        throw new Error("404 - Ошибка запроса. Адрес не найден.");
-    } else if (status >= 500) {
-        throw new Error("500 - Ошибка сервера. Попробуйте позже.");
-    } else {
-        throw new Error(`Ошибка при загрузке данных ${status}: ${message} \n ${error.response?.data.message}`);
-    }
-
-
-
-
-
-
-
-}
+export { handleApiError };

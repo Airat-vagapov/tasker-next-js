@@ -1,0 +1,26 @@
+import { registerData } from '@/types/auth'
+import axios from 'axios'
+import { handleApiError } from './taskApi'
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+
+
+
+export const authApi = {
+    register: async ({ username, password, role }: registerData) => {
+        const payload =
+        {
+            username: username,
+            password: password,
+            role: role,
+        }
+        try {
+            const { data } = await axios.post<any>(`${BASE_URL}/auth/register`, payload)
+            console.log('API response', data)
+            return data;
+        } catch (error) {
+            handleApiError(error)
+            throw error
+        }
+    }
+}
