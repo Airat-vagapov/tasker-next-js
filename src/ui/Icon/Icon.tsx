@@ -15,7 +15,6 @@ const Icon = ({ name, size, color, hovered = false }: IconProps) => {
             text-[32px]
             material-symbols-outlined
             cursor-pointer
-            hover:text-blueHover transition-all duration-300
                 `}
                     style={{
                         fontSize: `${size}px`,

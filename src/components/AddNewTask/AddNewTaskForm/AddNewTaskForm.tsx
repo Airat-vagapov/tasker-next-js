@@ -80,7 +80,7 @@ const AddNewTaskForm = () => {
                         resetForm();
                     }}
                 >
-                    {() => (
+                    {({ errors }) => (
                         <Form className="flex flex-col gap-5">
                             <p className="text-center">Add new task</p>
                             <Input
@@ -88,7 +88,7 @@ const AddNewTaskForm = () => {
                                 id="text"
                                 name="title"
                                 inptType="text"
-
+                                errorText={errors.title}
                             />
                             {/* <Button text={"Generate task description"} onClick={async () => {
                         if (addNewTaskForm.values.title) {
@@ -103,6 +103,7 @@ const AddNewTaskForm = () => {
                                 label="Description"
                                 name="description"
                                 id="description"
+                                errorText={errors.description}
                             />
 
                             <Droplist

@@ -7,7 +7,6 @@ export default function Page() {
         <>
             <Container>
                 <Content>
-                    <div>Auth/Registration</div>
                     <Auth />
                 </Content>
             </Container>
