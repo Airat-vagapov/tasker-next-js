@@ -16,14 +16,11 @@ export const taskApi = {
             const { data } = await axios.get<ApiResponse>(`${BASE_URL}/tasks`,
                 {
                     params: { task_id, search, status, sortBy, order, priority },
-                    // timeout: 30000
-
                 }
             )
             return data.result
         } catch (error) {
             handleApiError(error)
-            throw error
         }
     },
 
@@ -34,7 +31,6 @@ export const taskApi = {
             return data.result
         } catch (error) {
             handleApiError(error)
-            throw error
         }
 
     },
@@ -46,7 +42,6 @@ export const taskApi = {
             return data.result
         } catch (error) {
             handleApiError(error)
-            throw error
         }
 
     },
@@ -57,7 +52,6 @@ export const taskApi = {
             return res
         } catch (error) {
             handleApiError(error)
-            throw error
         }
     },
 
@@ -69,7 +63,6 @@ export const taskApi = {
             return res
         } catch (error) {
             handleApiError(error)
-            throw error
         }
     },
 
@@ -79,7 +72,6 @@ export const taskApi = {
             return res.data
         } catch (error) {
             handleApiError(error)
-            throw error
         }
     },
 
@@ -89,7 +81,6 @@ export const taskApi = {
             return res
         } catch (error) {
             handleApiError(error)
-            throw error
         }
     }
 }

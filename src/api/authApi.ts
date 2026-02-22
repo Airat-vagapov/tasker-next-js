@@ -1,10 +1,8 @@
 import { RegisterData } from '@/types/auth'
 import axios from 'axios'
-import { handleApiError } from './taskApi'
+import { handleApiError } from "@/api/apiErrorHandler"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
-
-
 
 export const authApi = {
     register: async ({ firstName, lastName, username, password, role }: RegisterData) => {
@@ -22,7 +20,6 @@ export const authApi = {
             return data;
         } catch (error) {
             handleApiError(error)
-            throw error
         }
     }
 }
