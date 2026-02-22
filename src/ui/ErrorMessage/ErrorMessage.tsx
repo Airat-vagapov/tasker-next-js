@@ -7,8 +7,6 @@ type ErrorMessageProps = {
 const ErrorMessage = ({ message = "Unknown message" }: ErrorMessageProps) => {
     if (!message || message === 'Unknown message') return null;
     
-    // const isVisible = Boolean(message?.trim());
-
     return (
         <div className="transition-opacity duration-500 ease-out">
             <div className="flex gap-4 items-center rounded-xl p-4 border border-rose-900/50 bg-rose-950/30 text-rose-100 backdrop-blur-sm">
