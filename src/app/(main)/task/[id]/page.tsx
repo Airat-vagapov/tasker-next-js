@@ -1,13 +1,5 @@
-import ErrorBottom from "@/components/ErrorBottom/ErrorBottom";
-import TaskDetailHeader from "@/components/TaskDetail/TaskDetailHeader/TaskDetailHeader";
-import { priorityColors } from "@/data/priority";
-import Badge from "@/ui/Badge/Badge";
 import Container from "@/ui/Container/Container";
 import Content from "@/ui/Content/Content";
-import ContentBlock from "@/ui/ContentBlock/ContentBlock";
-import FieldRow from "@/ui/FieldRow/FieldRow";
-import PageTitle from "@/ui/PageTitle/PageTitle";
-import { capitalizeFirstLetter, convertStringToTime } from "@/utils/scripts";
 
 import TaskDetail from "@/components/TaskDetail/TaskDetail";
 
@@ -28,8 +20,6 @@ export default async function Page({ params }: Props) {
                     <TaskDetail id={id}></TaskDetail>
                 </Content>
             </Container>
-
-
         </>
     )
     // return (

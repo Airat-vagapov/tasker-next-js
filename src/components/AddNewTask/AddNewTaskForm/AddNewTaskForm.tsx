@@ -24,9 +24,12 @@ const AddNewTaskForm = () => {
     const [taskIsAdded, setTaskIsAdded] = useState<boolean>(false);
     const [taskAddError, setTaskAddError] = useState<boolean>(false);
 
-    // TODO:
-    // Добавить типизацию ошибки
-    const [fetchError, setFetchError] = useState<any>(null);
+    type ApiError = Error & {
+        response?: {
+            status?: number;
+        };
+    };
+    const [fetchError, setFetchError] = useState<ApiError | null>(null);
 
     // API
     const queryClient = useQueryClient()
@@ -77,7 +80,7 @@ const AddNewTaskForm = () => {
                         resetForm();
                     }}
                 >
-                    {() => (
+                    {({ errors }) => (
                         <Form className="flex flex-col gap-5">
                             <p className="text-center">Add new task</p>
                             <Input
@@ -85,7 +88,7 @@ const AddNewTaskForm = () => {
                                 id="text"
                                 name="title"
                                 inptType="text"
-
+                                errorText={errors.title}
                             />
                             {/* <Button text={"Generate task description"} onClick={async () => {
                         if (addNewTaskForm.values.title) {
@@ -100,6 +103,7 @@ const AddNewTaskForm = () => {
                                 label="Description"
                                 name="description"
                                 id="description"
+                                errorText={errors.description}
                             />
 
                             <Droplist

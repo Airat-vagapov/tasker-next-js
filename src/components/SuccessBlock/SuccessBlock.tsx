@@ -7,6 +7,7 @@ type SuccessBlockProps = {
     text: string;
     actionText?: string;
     action?: () => void;
+    link?: string;
 };
 
 const SuccessBlock: React.FC<SuccessBlockProps> = ({
@@ -14,6 +15,7 @@ const SuccessBlock: React.FC<SuccessBlockProps> = ({
     text,
     actionText,
     action,
+    link,
 }) => {
     return (
         <div className="flex flex-col items-center justify-center gap-4">
@@ -24,6 +26,7 @@ const SuccessBlock: React.FC<SuccessBlockProps> = ({
                 <TextLink type="action" action={action}>
                     {actionText}
                 </TextLink>
+                {link && <TextLink type={'link'} link={link}>Login</TextLink>}
             </div>
         </div>
     );

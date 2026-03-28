@@ -1,3 +1,5 @@
+'use client'
+
 import { ChangeEvent, FocusEvent, useRef, KeyboardEvent } from "react";
 import Icon from '@/ui/Icon/Icon';
 import Tooltip from "../Tooltip/Tooltip";
@@ -7,11 +9,9 @@ type InputProps = {
     label?: string;
     id: string;
     name: string;
-    placeholder?: string,
     inptType: string;
-    // onChange: (e: ChangeEvent<any>) => void;
-    // onBlur: (e: FocusEvent<any, Element>) => void;
-    // value: string | number;
+
+    placeholder?: string,
     errorText?: string;
     disable?: boolean;
     arrow?: boolean;
@@ -54,8 +54,8 @@ const Input: React.FC<InputProps> = ({
                 <input
                     ref={inputRef}
                     className={`bg-mainblack w-full py-4.5 px-3 color-mainwhite rounded-md h-14 transition-all duration-300 
-                    border-1
-                    ${errorText ? "border-errorRed focus:border-errorRed" : "border-transparent focus:border-blue "}
+                    border-1 
+                    ${errorText ? "border-errorRed focus:border-errorRed" : "border-lightGray focus:border-blue "}
                     ${disable ? 'cursor-pointer' : ''}
                     `}
                     id={id}
