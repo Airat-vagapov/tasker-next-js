@@ -21,12 +21,13 @@ const TextLink: React.FC<TextLinkProps> = ({ children, type, action, link }) => 
             )}
 
             {type && link && type == "link" && (
-                <a
-                    // href={link}
+                <Link
+                    href={link}
                     className="text-xs text-gray hover:text-blueHover transition-all duration-300"
                 >
-                    <Link href={link}>{children}</Link>
-                </a>
+                    {children}
+                </Link>
+
             )}
         </>
     );
