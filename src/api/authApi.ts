@@ -2,6 +2,7 @@ import { RegisterData, AuthData, AuthResponse } from '@/types/auth'
 import { IUser } from "@/types/user";
 import axios from 'axios'
 import { handleApiError } from "@/api/apiErrorHandler"
+import { useAuthStore } from '@/store/authStore';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -29,7 +30,21 @@ export const authApi = {
             password: password,
         }
         try {
-            const { data } = await axios.post<AuthResponse>(`${BASE_URL}/auth/login`, payload)
+            const { data } = await axios.post<AuthResponse>(`${BASE_URL}/auth/login`, payload, {
+                withCredentials: true
+            })
+            console.log('API response', data)
+            useAuthStore.getState().setAccessToken(data.accessToken)
+            useAuthStore.getState().setUser(data.user)
+        } catch (error) {
+            handleApiError(error)
+        }
+    },
+    refreshToken: async () => {
+        try {
+            const { data } = await axios.post<any>(`${BASE_URL}/auth/refresh`, {
+                withCredentials: true
+            })
             console.log('API response', data)
             return data;
         } catch (error) {
