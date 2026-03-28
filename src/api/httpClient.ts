@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
 import { authApi } from './authApi';
-import router from 'next/router';
 
 export const httpClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -59,7 +58,7 @@ httpClient.interceptors.response.use(
                 return httpClient(originalRequest);
             } catch (error) {
                 useAuthStore.getState().logout();
-                router.push('/login');
+                window.location.href = '/login';
                 return Promise.reject(error);
             } finally {
                 isRefreshing = false;
