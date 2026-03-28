@@ -1,10 +1,14 @@
+import { link } from "fs";
+import Link from 'next/link'
+
 type TextLinkProps = {
     children: React.ReactNode;
     type: "action" | "link";
+    link?: string;
     action?: () => void;
 };
 
-const TextLink: React.FC<TextLinkProps> = ({ children, type, action }) => {
+const TextLink: React.FC<TextLinkProps> = ({ children, type, action, link }) => {
     return (
         <>
             {type && type == "action" && (
@@ -16,12 +20,12 @@ const TextLink: React.FC<TextLinkProps> = ({ children, type, action }) => {
                 </p>
             )}
 
-            {type && type == "link" && (
+            {type && link && type == "link" && (
                 <a
-                    href=""
+                    // href={link}
                     className="text-xs text-gray hover:text-blueHover transition-all duration-300"
                 >
-                    {children}
+                    <Link href={link}>{children}</Link>
                 </a>
             )}
         </>

@@ -14,11 +14,6 @@ type TaskStore = {
 export const useTaskStore = create<TaskStore>()(
     devtools(
         (set) => ({
-            // update
-            // isNeedUpdate: false,
-            // changeUpdate: () => set({isNeedUpdate: true}),
-            // resetUpdate: () => set({isNeedUpdate: false}),
-            // deleted task
             deletedTask: null,
             updateDeletedTask: (task: ITask | null) => set({deletedTask: task}), 
             removeDeletedTask: () => set({deletedTask: null}),

@@ -2,7 +2,7 @@
 
 import * as yup from "yup";
 import { Form, Formik } from "formik";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { authApi } from "@/api/authApi";
 import { RegisterData } from "@/types/auth";
@@ -20,12 +20,11 @@ const RegistrtionForm = () => {
     const [isRegisterSuccess, setIsRegisterSuccess] = useState<boolean>(false)
     const [registerError, setRegisterError] = useState<ApiError>()
     const [newUser, setNewUser] = useState<IUser>()
+
     // API
-    // const queryClient = useQueryClient()
     const register = useMutation<any, ApiError, RegisterData>({
         mutationFn: authApi.register,
         onSuccess: (data) => {
-            console.log('API response in Form', data)
             setNewUser(data.user)
             setIsRegisterSuccess(true)
         },
@@ -36,8 +35,7 @@ const RegistrtionForm = () => {
 
     return (
         <>
-            <span>Registration Form</span>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 border-1 border-lightGray p-8 rounded-xl">
                 <ErrorMessage message={registerError?.errorMessage || 'Unknown message'}></ErrorMessage>
 
                 {!isRegisterSuccess &&
@@ -56,9 +54,8 @@ const RegistrtionForm = () => {
                             password: yup.string().min(8, "Minimum 8 symbols").required("Required"),
                         })}
                         onSubmit={async (values) => {
-                            const user = await register.mutateAsync(values)
+                            await register.mutateAsync(values)
                             setRegisterError(undefined)
-                            console.log('Form submit data', user)
                         }
 
                         }
@@ -110,8 +107,7 @@ const RegistrtionForm = () => {
                         <SuccessBlock
                             title={`${newUser?.firstName} ${newUser?.lastName} register is successful`}
                             text={`You can authorize with username ${newUser.username}`}
-                        // actionText="Add another task"
-                        // action={ }
+                            link={'/login'}
                         />
                     </>
                 }
