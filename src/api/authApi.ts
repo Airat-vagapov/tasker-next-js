@@ -3,7 +3,7 @@ import { IUser } from "@/types/user";
 import axios from 'axios'
 import { handleApiError } from "@/api/apiErrorHandler"
 import { useAuthStore } from '@/store/authStore';
-import { httpClient } from './httpClient';
+import { authHttpClient } from './httpClient';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -18,8 +18,7 @@ export const authApi = {
             role: role,
         }
         try {
-            const { data } = await httpClient.post<IUser>(`/auth/register`, payload)
-            console.log('API response', data)
+            const { data } = await authHttpClient.post<IUser>(`/auth/register`, payload)
             return data;
         } catch (error) {
             handleApiError(error)
@@ -31,10 +30,9 @@ export const authApi = {
             password: password,
         }
         try {
-            const { data } = await httpClient.post<AuthResponse>(`/auth/login`, payload, {
+            const { data } = await authHttpClient.post<AuthResponse>(`/auth/login`, payload, {
                 withCredentials: true
             })
-            console.log('API response', data)
             useAuthStore.getState().setAccessToken(data.accessToken)
             useAuthStore.getState().setUser(data.user)
         } catch (error) {
@@ -43,10 +41,9 @@ export const authApi = {
     },
     refreshToken: async () => {
         try {
-            const { data } = await httpClient.post<any>(`/auth/refresh`, {
+            const { data } = await authHttpClient.post<any>(`/auth/refresh`, {}, {
                 withCredentials: true
             })
-            console.log('API response', data)
             return data;
         } catch (error) {
             handleApiError(error)
