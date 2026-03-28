@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
-import { redirect } from 'next/navigation';
+import { authApi } from './authApi';
+import router from 'next/router';
 
 export const httpClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -26,13 +27,13 @@ httpClient.interceptors.response.use(
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                const { data } = await axios.post('/auth/refresh');
+                const { data } = await authApi.refreshToken();
                 useAuthStore.getState().setAccessToken(data.accessToken);
                 originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
                 return httpClient(originalRequest);
             } catch (error) {
                 useAuthStore.getState().logout();
-                redirect('/login');
+                router.push('/login');
             }
         }
         return Promise.reject(error);

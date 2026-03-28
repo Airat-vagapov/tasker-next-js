@@ -51,8 +51,6 @@ export const taskApi = {
     },
 
     deleteTask: async (id: number) => {
-
-        (id)
         try {
             const res = await httpClient.delete(`/task/${id}`)
             return res
