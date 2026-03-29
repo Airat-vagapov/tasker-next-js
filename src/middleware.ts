@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
         }
 
         const url = new URL('/', request.url)
-        url.searchParams.set('reason', 'isAurhorized')
+        url.searchParams.set('reason', 'isAuthorized')
         return NextResponse.redirect(url)
     }
 
